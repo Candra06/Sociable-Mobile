@@ -27,7 +27,7 @@ class _ReplyForumPageState extends State<ReplyForumPage> {
     setState(() {
       load = true;
     });
-    print(load);
+    
     detailForum = repository.detailForum(widget.idForum);
     // if (detailForum.status == true) {
     setState(() {

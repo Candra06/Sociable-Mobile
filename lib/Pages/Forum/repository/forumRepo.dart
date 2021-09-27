@@ -32,4 +32,16 @@ class ForumRepository {
       return DetailForum.fromJson(data);
     }
   }
+
+  Future<bool> postForum(Forum forum) async {
+    var token = await Pref.getToken();
+    print(forum.toJson());
+    http.Response res = await http.post(Uri.parse(EndPoint.addForum), headers: {'Authorization': 'Bearer ' + token}, body: forum.toJson());
+    print(res.body);
+    if (res.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
