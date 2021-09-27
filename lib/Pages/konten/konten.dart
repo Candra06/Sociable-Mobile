@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:sociable/Pages/konten/models/konten_model.dart';
+import 'package:sociable/Pages/konten/models/konten_repository.dart';
 import 'package:sociable/Pages/konten/widget/video_konten.dart';
+import 'package:sociable/helper/network.dart';
 
 class KontenPage extends StatefulWidget {
   @override
@@ -8,98 +12,168 @@ class KontenPage extends StatefulWidget {
 }
 
 class _KontenPageState extends State<KontenPage> {
+  Future<List<KontenModel>> listModel;
+  KontenRepository kontenRepository = KontenRepository();
+  bool load = true;
+
+  void getData() async {
+    setState(() {
+      load = true;
+    });
+
+    listModel = kontenRepository.ListKonten();
+    setState(() {
+      load = false;
+    });
+  }
+
   @override
+  void initState() {
+    getData();
+
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "KONTEN",
-              style: TextStyle(color: Colors.black, fontSize: 25),
+        appBar: AppBar(
+          title: Text(
+            'KONTEN',
+            style: GoogleFonts.poppins().copyWith(
+              color: Colors.black,
             ),
-          ],
+          ),
+          elevation: 0,
+          backgroundColor: Colors.white,
         ),
-      ),
-      body: ListView(
-        children: [
-          Column(
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                width: double.infinity,
-                height: 137.78,
-                color: Colors.white,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Container(
-                        margin: EdgeInsets.only(right: 10),
-                        width: 294.24,
-                        height: 137.78,
-                        decoration: BoxDecoration(
-                            color: Colors.green, image: DecorationImage(image: AssetImage("assets/images/konten/konten_slide1.jpeg"), fit: BoxFit.cover), borderRadius: BorderRadius.circular(15)),
-                        child: Flexible(
-                          fit: FlexFit.tight,
-                          child: Container(
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Color.fromRGBO(100, 100, 100, 99)),
-                            child: Center(
-                                child: Text(
-                              "Temukan Teman Baru",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.white, fontSize: 25),
-                            )),
-                          ),
-                        )),
-                    Container(
-                        margin: EdgeInsets.only(right: 10),
-                        width: 294.24,
-                        height: 137.78,
-                        decoration: BoxDecoration(
-                            color: Colors.green, image: DecorationImage(image: AssetImage("assets/images/konten/konten_slide2.jpeg"), fit: BoxFit.cover), borderRadius: BorderRadius.circular(15)),
-                        child: Flexible(
-                          fit: FlexFit.tight,
-                          child: Container(
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Color.fromRGBO(100, 100, 100, 99)),
-                            child: Center(
-                                child: Text(
-                              "Temukan Pengalaman Baru",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.white, fontSize: 25),
-                            )),
-                          ),
-                        )),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Column(
+        body: load
+            ? Center(child: CircularProgressIndicator())
+            : Column(
                 children: [
-                  // VideoContentItem("url thumbnai","title","is premium","url video"),
-
-                  VideoContentItem("assets/images/konten_slide2.jpeg", "5 tips berkenalan dengan orang baru", "Premium", "url_video"),
-                  VideoContentItem("assets/images/konten_slide1.jpeg", "tips agar tidak baperan", "Basic", "url_video"),
-                  VideoContentItem("assets/images/konten_slide2.jpeg", "tips hidup sehat", "Premium", "url_video"),
-                  VideoContentItem("assets/images/konten_slide1.jpeg", "tetap positive thinking", "Basic", "url_video"),
-                  VideoContentItem("assets/images/konten_slide2.jpeg", "cara menaham emosi", "Premium", "url_video"),
-                  VideoContentItem("assets/images/konten_slide1.jpeg", "cara bersikap dewasa", "Basic", "url_video"),
-                  VideoContentItem("assets/images/konten_slide2.jpeg", "gatau apalagi", "Premium", "url_video"),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    height: 138,
+                    // color: Colors.white,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 35,
+                          ),
+                          Container(
+                            width: 295,
+                            height: 138,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    "assets/images/konten/konten_slide1.jpeg"),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Color.fromRGBO(100, 100, 100, 99),
+                              ),
+                              child: Text(
+                                'Temukan \nteman baru!',
+                                style: GoogleFonts.poppins().copyWith(
+                                  color: Color(0xffF7F7F7),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Container(
+                            width: 295,
+                            height: 138,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(12),
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    "assets/images/konten/konten_slide2.jpeg"),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Color.fromRGBO(100, 100, 100, 99),
+                              ),
+                              child: Text(
+                                'Temukan \npengalaman baru!',
+                                style: GoogleFonts.poppins().copyWith(
+                                  color: Color(0xffF7F7F7),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Expanded(
+                    child: FutureBuilder<List<KontenModel>>(
+                      future: listModel,
+                      builder: (builder, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        } else {
+                          return snapshot.hasData
+                              ? ListView.builder(
+                                  itemCount: snapshot.data.length,
+                                  itemBuilder: (BuildContext bc, int i) {
+                                    return VideoContentItem(
+                                      thumbnailVideo: EndPoint.server +
+                                          '/' +
+                                          snapshot.data[i].thumbnail,
+                                      judulVideo: snapshot.data[i].title,
+                                      typeVideo:
+                                          snapshot.data[i].status == "Premium"
+                                              ? true
+                                              : false,
+                                    );
+                                  },
+                                )
+                              : Container(
+                                  child: Text('Data belum ada'),
+                                );
+                        }
+                      },
+                    ),
+                  )
                 ],
-              )
-            ],
-          )
-        ],
-      ),
+              ),
     );
   }
 }
