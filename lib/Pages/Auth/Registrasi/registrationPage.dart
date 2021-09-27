@@ -25,9 +25,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return  Scaffold(
         body: Padding(
           padding: EdgeInsets.only(right: 30, left: 30, top: 50),
           child: ListView(
@@ -172,7 +170,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             ],
           ),
         ),
-      ),
+      
     );
   }
 }

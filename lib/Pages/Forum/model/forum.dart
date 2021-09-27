@@ -51,15 +51,11 @@ class Forum {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id == null ? null : id,
         "topic": topic == null ? null : topic,
-        "name": name == null ? null : name,
         "content": content == null ? null : content,
-        "likes": likes == null ? null : likes,
-        "created_by": createdBy == null ? null : createdBy,
+        
         "anonim": anonim == null ? null : anonim,
-        "created_at": createdAt == null ? null : createdAt.toIso8601String(),
-        "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
+       
       };
 }
 
