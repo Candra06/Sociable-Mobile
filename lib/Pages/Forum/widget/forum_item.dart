@@ -7,6 +7,7 @@ class ForumItem extends StatefulWidget {
   final String isiForum;
   final String waktuPosting;
   final String penulis;
+  final String isAnonim;
   final forumTopik;
   int jumlahLike;
   int jumlahKomentar;
@@ -14,6 +15,7 @@ class ForumItem extends StatefulWidget {
 
   ForumItem(
     this.idForum,
+    this.isAnonim,
     this.isiForum,
     this.waktuPosting,
     this.penulis,
@@ -53,13 +55,14 @@ class _ForumItemState extends State<ForumItem> {
             Row(
               children: [
                 Text(
-                  widget.penulis,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16  ),
+                  widget.isAnonim == 'true' ? 'Anonim' : widget.penulis,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 8),
                   padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(color: Color.fromRGBO(230, 245, 245, 1)),
+                  decoration:
+                      BoxDecoration(color: Color.fromRGBO(230, 245, 245, 1)),
                   child: Text(
                     widget.forumTopik,
                     style: TextStyle(color: Colors.blue),
@@ -126,7 +129,8 @@ class _ForumItemState extends State<ForumItem> {
                       children: [
                         IconButton(
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (context) {
                               return ReplyForumPage(widget.idForum.toString());
                             }));
                           },
@@ -135,7 +139,8 @@ class _ForumItemState extends State<ForumItem> {
                             color: Colors.black,
                           ),
                         ),
-                        Text(widget.jumlahKomentar.toString(), style: TextStyle(color: Colors.black))
+                        Text(widget.jumlahKomentar.toString(),
+                            style: TextStyle(color: Colors.black))
                       ],
                     ),
                   ],

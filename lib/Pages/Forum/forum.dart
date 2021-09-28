@@ -116,6 +116,7 @@ class _ForumPageState extends State<ForumPage> {
                           itemBuilder: (BuildContext bc, int i) {
                             return ForumItem(
                                 snapshot.data[i].id,
+                                snapshot.data[i].anonim,
                                 snapshot.data[i].content,
                                 Config.formatDateInput(
                                     snapshot.data[i].createdAt.toString()),
