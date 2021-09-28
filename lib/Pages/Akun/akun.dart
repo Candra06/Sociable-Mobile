@@ -124,7 +124,7 @@ class _AkunPageState extends State<AkunPage> {
                     decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(30))),
                     child: Column(
                       children: [
-                        for (int i = 0; i < 10; i++) ForumItem(i, "isiForum", "10 menit yang lalu", "penulis", "forumTopik", i * i * i, i * i, true)
+                        for (int i = 0; i < 10; i++) ForumItem(i, "isiForum", 'true', "10 menit yang lalu", "penulis", "forumTopik", i * i * i, i * i, true)
                         // ForumItem(idForum, "isiForum", "waktuPosting", "penulis", "forumTopik", "jumlahLike", "jumlahKomentar", "isLike")
                       ],
                     ),

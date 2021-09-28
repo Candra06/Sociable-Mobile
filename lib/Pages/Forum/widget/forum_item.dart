@@ -7,6 +7,7 @@ class ForumItem extends StatefulWidget {
   final String isiForum;
   final String waktuPosting;
   final String penulis;
+  final String isAnonim;
   final forumTopik;
   int jumlahLike;
   int jumlahKomentar;
@@ -14,6 +15,7 @@ class ForumItem extends StatefulWidget {
 
   ForumItem(
     this.idForum,
+    this.isAnonim,
     this.isiForum,
     this.waktuPosting,
     this.penulis,
@@ -53,8 +55,8 @@ class _ForumItemState extends State<ForumItem> {
             Row(
               children: [
                 Text(
-                  widget.penulis,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16  ),
+                  widget.isAnonim == 'true' ? 'Anonim' : widget.penulis,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 8),

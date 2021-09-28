@@ -114,16 +114,8 @@ class _ForumPageState extends State<ForumPage> {
                       ? ListView.builder(
                           itemCount: snapshot.data.length,
                           itemBuilder: (BuildContext bc, int i) {
-                            return ForumItem(
-                                snapshot.data[i].id,
-                                snapshot.data[i].content,
-                                Config.formatDateInput(
-                                    snapshot.data[i].createdAt.toString()),
-                                snapshot.data[i].name.toString(),
-                                snapshot.data[i].topic,
-                                snapshot.data[i].likes,
-                                snapshot.data[i].likes,
-                                true);
+                            return ForumItem(snapshot.data[i].id, snapshot.data[i].anonim,snapshot.data[i].content, Config.formatDateInput(snapshot.data[i].createdAt.toString()), snapshot.data[i].name.toString(),
+                                snapshot.data[i].topic, snapshot.data[i].likes, snapshot.data[i].likes, true);
                           })
                       : Container(
                           child: Config.emptyData('Belum ada forum', context),
