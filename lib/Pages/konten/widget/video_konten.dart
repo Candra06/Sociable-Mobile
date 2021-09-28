@@ -1,17 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sociable/Pages/konten/detail_konten.dart';
 // import 'package:sociable/Pages/Membership/membership.dart';
 // import 'package:sociable/Pages/konten/detail_kontent.dart';
 
 class VideoContentItem extends StatefulWidget {
+  String idVideo;
   String thumbnailVideo;
   String judulVideo;
+  String description;
   bool typeVideo;
 
   VideoContentItem({
+    this.idVideo,
     this.thumbnailVideo,
     this.judulVideo,
+    this.description,
     this.typeVideo: true,
   });
 
@@ -23,7 +28,17 @@ class _VideoContentItemState extends State<VideoContentItem> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) {
+            return DetailKonten(
+              idYoutube: widget.idVideo,
+              title: widget.judulVideo,
+              description: widget.description,
+            );
+          }),
+        );
+      },
       child: Container(
         margin: EdgeInsets.symmetric(
           vertical: 7,
