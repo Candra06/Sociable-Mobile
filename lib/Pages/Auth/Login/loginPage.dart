@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sociable/Pages/Auth/Registrasi/diagnosa.dart';
 import 'package:sociable/Pages/Auth/authModel.dart';
 import 'package:sociable/Pages/Auth/auth_repository.dart';
 import 'package:sociable/helper/config.dart';
@@ -28,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
     auth.password = txtPassword.text;
 
     dynamic respon = await repository.loginProses(auth).then((value) => {auth = value});
-
+    bool res;
     if (respon != null) {
       SharedPreferences pref = await SharedPreferences.getInstance();
       pref.setString('username', auth.username);
@@ -36,14 +37,26 @@ class _LoginPageState extends State<LoginPage> {
       pref.setString('phone', auth.phone);
       pref.setString('role', auth.role.toString());
       pref.setString('token', auth.token);
-      pref.setString('level_diagnosa', auth.levelDiagnosa);
       pref.setString('gender', auth.gender);
       pref.setString('birthDate', auth.birthDate.toString());
-      setState(() {
-        Config.alert(1, 'Login berhassil');
-        Navigator.pop(context);
-        Navigator.pushNamed(context, Routes.HOME);
-      });
+      Config.alert(1, 'Login berhasil');
+      Navigator.pop(context);
+      if (auth.levelDiagnosa == null) {
+        res = await repository.createChallenge();
+        pref.setString('level_diagnosa', '-');
+        pref.setString('isDiagnosa', 'true');
+        setState(() {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+            return DiagnosaPage();
+          }));
+        });
+      } else {
+        pref.setString('level_diagnosa', auth.levelDiagnosa);
+        pref.setString('isDiagnosa', 'false');
+        setState(() {
+          Navigator.pushNamed(context, Routes.HOME);
+        });
+      }
     } else {
       print('object');
       Navigator.pop(context);
@@ -136,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: FlatButton(
                   child: Text("Belum Punya Akun?"),
                   onPressed: () {
-                    Navigator.pushNamed(context, Routes.LOGIN);
+                    Navigator.pushNamed(context, Routes.REGISTER);
                   },
                 ),
               ),

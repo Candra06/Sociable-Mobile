@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sociable/MainPage.dart';
-import 'package:sociable/Pages/Akun/akun.dart';
+
 import 'package:sociable/Pages/Auth/Login/loginPage.dart';
 import 'package:sociable/Pages/Auth/Registrasi/registrationPage.dart';
 import 'package:sociable/Pages/Forum/add_new_forum/add_new_forum.dart';
