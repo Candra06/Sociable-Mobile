@@ -4,6 +4,7 @@ import 'package:sociable/Pages/Forum/repository/forumRepo.dart';
 import 'package:sociable/Pages/Forum/searchLayout.dart';
 import 'package:sociable/Pages/Forum/widget/forum_item.dart';
 import 'package:sociable/helper/config.dart';
+import 'package:sociable/helper/route.dart';
 import 'add_new_forum/add_new_forum.dart';
 
 class ForumPage extends StatefulWidget {
@@ -39,9 +40,10 @@ class _ForumPageState extends State<ForumPage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return AddNewForumPage();
-          }));
+          // Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          //   return AddNewForum();
+          // }));
+          Navigator.pushNamed(context, Routes.ADD_FORUM);
         },
         child: Container(
           child: Icon(

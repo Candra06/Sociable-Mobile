@@ -36,9 +36,7 @@ class _KontenPageState extends State<KontenPage> {
   }
 
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: Text(
             'KONTEN',
@@ -181,7 +179,6 @@ class _KontenPageState extends State<KontenPage> {
                   )
                 ],
               ),
-      ),
     );
   }
 }

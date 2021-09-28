@@ -62,69 +62,64 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         bottomNavigationBar: Container(
           width: double.infinity,
           height: 70,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey.shade100),
             color: Colors.white,
-
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               IconButton(
-                  onPressed: (){
+                  onPressed: () {
                     setState(() {
                       moveToNavigationBar("forum");
                     });
-
                   },
                   icon: Icon(
                     Icons.forum_rounded,
                     size: 30,
-                      color: widget.page1Style,
-                    )),
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        moveToNavigationBar("konten");
-                      });
-                    },
-                    icon: Icon(
-                      Icons.video_collection_outlined,
-                      size: 30,
-                      color: widget.page2Style,
-                    )),
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        moveToNavigationBar("challanges");
-                      });
-                    },
-                    icon: Icon(
-                      Icons.calendar_today,
-                      size: 30,
-                      color: widget.page3Style,
-                    )),
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        moveToNavigationBar("akun");
-                      });
-                    },
-                    icon: Icon(
-                      Icons.person_pin_rounded,
-                      size: 30,
-                      color: widget.page4Style,
-                    )),
-              ],
-            ),
+                    color: widget.page1Style,
+                  )),
+              IconButton(
+                  onPressed: () {
+                    setState(() {
+                      moveToNavigationBar("konten");
+                    });
+                  },
+                  icon: Icon(
+                    Icons.video_collection_outlined,
+                    size: 30,
+                    color: widget.page2Style,
+                  )),
+              IconButton(
+                  onPressed: () {
+                    setState(() {
+                      moveToNavigationBar("challanges");
+                    });
+                  },
+                  icon: Icon(
+                    Icons.calendar_today,
+                    size: 30,
+                    color: widget.page3Style,
+                  )),
+              IconButton(
+                  onPressed: () {
+                    setState(() {
+                      moveToNavigationBar("akun");
+                    });
+                  },
+                  icon: Icon(
+                    Icons.person_pin_rounded,
+                    size: 30,
+                    color: widget.page4Style,
+                  )),
+            ],
           ),
-          body: widget.thisPage),
-    );
+        ),
+        body: widget.thisPage);
   }
 }
