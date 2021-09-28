@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sociable/Pages/konten/models/konten_model.dart';
 import 'package:sociable/Pages/konten/models/konten_repository.dart';
 import 'package:sociable/Pages/konten/widget/video_konten.dart';
+import 'package:sociable/helper/config.dart';
 import 'package:sociable/helper/network.dart';
 
 class KontenPage extends StatefulWidget {
@@ -41,8 +42,9 @@ class _KontenPageState extends State<KontenPage> {
         appBar: AppBar(
           title: Text(
             'KONTEN',
-            style: GoogleFonts.poppins().copyWith(
+            style: TextStyle(
               color: Colors.black,
+              fontSize: 25,
             ),
           ),
           elevation: 0,
@@ -156,6 +158,7 @@ class _KontenPageState extends State<KontenPage> {
                                   itemCount: snapshot.data.length,
                                   itemBuilder: (BuildContext bc, int i) {
                                     return VideoContentItem(
+                                      idVideo: snapshot.data[i].url,
                                       thumbnailVideo: EndPoint.server +
                                           '/' +
                                           snapshot.data[i].thumbnail,
@@ -164,11 +167,13 @@ class _KontenPageState extends State<KontenPage> {
                                           snapshot.data[i].status == "Premium"
                                               ? true
                                               : false,
+                                      description: snapshot.data[i].description,
                                     );
                                   },
                                 )
                               : Container(
-                                  child: Text('Data belum ada'),
+                                  child: Config.emptyData(
+                                      'Belum ada forum', context),
                                 );
                         }
                       },

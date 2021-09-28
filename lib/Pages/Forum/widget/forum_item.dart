@@ -54,7 +54,7 @@ class _ForumItemState extends State<ForumItem> {
               children: [
                 Text(
                   widget.penulis,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16  ),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 8),

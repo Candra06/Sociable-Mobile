@@ -19,7 +19,7 @@ class KontenRepository {
     if (res.statusCode == 200) {
       var data = json.decode(res.body);
       List<dynamic> list = data['data'];
-      print(list);
+
       return list.map((e) => KontenModel.fromJson(e)).toList();
     } else {
       return [];
