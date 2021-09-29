@@ -1,8 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:sociable/MainPage.dart';
+import 'package:sociable/Pages/Challenges/challengeRepository.dart';
+import 'package:sociable/helper/config.dart';
+import 'package:sociable/helper/route.dart';
 
-class HasilDiagnosa extends StatelessWidget {
-  // const HasilDiagnosaDua({Key? key}) : super(key: key);
+class HasilDiagnosa extends StatefulWidget {
+  final String nama;
+  const HasilDiagnosa({Key key, this.nama}) : super(key: key);
+
+  @override
+  _HasilDiagnosaState createState() => _HasilDiagnosaState();
+}
+
+class _HasilDiagnosaState extends State<HasilDiagnosa> {
+  void submit() async {
+    setState(() {
+      Config.loading(context);
+    });
+    ChallengeRepository repository = new ChallengeRepository();
+
+    bool respon = await repository.insertChallenge();
+    if (respon) {
+      Navigator.pop(context);
+      Navigator.pushNamed(context, Routes.HOME);
+    } else {
+      Navigator.pop(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +54,7 @@ class HasilDiagnosa extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Hai [nama User]",
+                  "Hai " + widget.nama,
                   textAlign: TextAlign.start,
                   style: TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
                 ),
@@ -127,9 +151,9 @@ class HasilDiagnosa extends StatelessWidget {
                             style: TextStyle(fontSize: 20, color: Colors.black),
                           ),
                           onPressed: () {
-                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
-                              return MainPage();
-                            }));
+                            // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+                            //   return MainPage();
+                            // }));
                           },
                         ),
                       ),

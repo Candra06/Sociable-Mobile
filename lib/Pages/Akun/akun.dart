@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sociable/Pages/Forum/widget/forum_item.dart';
 import 'package:sociable/Pages/Membership/membership.dart';
 import 'package:sociable/helper/pref.dart';
+import 'package:sociable/helper/route.dart';
 
 class AkunPage extends StatefulWidget {
   final int idUser;
@@ -16,6 +18,30 @@ class _AkunPageState extends State<AkunPage> {
   String levelDiagnosa = "SAD Ringan";
   String memberShip = "Basic";
   String token = '';
+
+  void logout() async {
+    showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text('Apakah anda yakin?'),
+        content: new Text('Ingin keluar dari akun ini.'),
+        actions: <Widget>[
+          new FlatButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: new Text('Tidak'),
+          ),
+          new FlatButton(
+            onPressed: () async {
+              SharedPreferences pref = await SharedPreferences.getInstance();
+              await pref.clear();
+              Navigator.pushNamed(context, Routes.LOGIN);
+            },
+            child: new Text('Iya'),
+          ),
+        ],
+      ),
+    );
+  }
 
   getInfo() async {
     var xnama = await Pref.getNama();
@@ -64,7 +90,9 @@ class _AkunPageState extends State<AkunPage> {
                             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25),
                           ),
                           IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                logout();
+                              },
                               icon: Icon(
                                 Icons.logout,
                                 color: Colors.black,
@@ -124,7 +152,7 @@ class _AkunPageState extends State<AkunPage> {
                     decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(30))),
                     child: Column(
                       children: [
-                        for (int i = 0; i < 10; i++) ForumItem(i, "isiForum", "10 menit yang lalu", "penulis", "forumTopik", i * i * i, i * i, true)
+                        for (int i = 0; i < 10; i++) ForumItem(i, "isiForum", 'true', "10 menit yang lalu", "penulis", "forumTopik", i * i * i, i * i, true)
                         // ForumItem(idForum, "isiForum", "waktuPosting", "penulis", "forumTopik", "jumlahLike", "jumlahKomentar", "isLike")
                       ],
                     ),
