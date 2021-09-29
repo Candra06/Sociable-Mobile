@@ -59,7 +59,8 @@ class _ForumItemState extends State<ForumItem> {
                 Container(
                   margin: EdgeInsets.only(left: 8),
                   padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(color: Color.fromRGBO(230, 245, 245, 1)),
+                  decoration:
+                      BoxDecoration(color: Color.fromRGBO(230, 245, 245, 1)),
                   child: Text(
                     widget.forumTopik,
                     style: TextStyle(color: Colors.blue),
@@ -126,7 +127,8 @@ class _ForumItemState extends State<ForumItem> {
                       children: [
                         IconButton(
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (context) {
                               return ReplyForumPage(widget.idForum.toString());
                             }));
                           },
@@ -135,7 +137,8 @@ class _ForumItemState extends State<ForumItem> {
                             color: Colors.black,
                           ),
                         ),
-                        Text(widget.jumlahKomentar.toString(), style: TextStyle(color: Colors.black))
+                        Text(widget.jumlahKomentar.toString(),
+                            style: TextStyle(color: Colors.black))
                       ],
                     ),
                   ],
