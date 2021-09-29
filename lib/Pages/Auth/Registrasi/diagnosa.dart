@@ -60,6 +60,7 @@ class _DiagnosaPageState extends State<DiagnosaPage> {
     print(data['']);
     SharedPreferences sp = await SharedPreferences.getInstance();
     sp.setString('level_diagnosa', data['data']);
+    sp.setString('isDiagnosa', 'false');
     if (data['data'] == 'Bukan SAD') {
       Navigator.pop(context);
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
