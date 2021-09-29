@@ -23,11 +23,12 @@ class _ReplyForumPageState extends State<ReplyForumPage> {
   ForumRepository repository = ForumRepository();
   Future<DetailForum> detailForum;
 
+  TextEditingController replyController = new TextEditingController();
   void getData() async {
     setState(() {
       load = true;
     });
-    
+
     detailForum = repository.detailForum(widget.idForum);
     // if (detailForum.status == true) {
     setState(() {
@@ -45,107 +46,168 @@ class _ReplyForumPageState extends State<ReplyForumPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.white,
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, Routes.HOME);
-              },
-              icon: Icon(Icons.arrow_back, color: Config.textBlack)),
-          title: Text(
-            "FORUM",
-            style: TextStyle(color: Colors.black, fontSize: 25),
-          ),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, Routes.HOME);
+            },
+            icon: Icon(Icons.arrow_back, color: Config.textBlack)),
+        title: Text(
+          "FORUM",
+          style: TextStyle(color: Colors.black, fontSize: 25),
         ),
-        body: FutureBuilder<DetailForum>(
-          future: detailForum,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return LinearProgressIndicator();
-            } else {
-              return snapshot.hasData
-                  ? ListView(
-                      padding: EdgeInsets.all(10),
-                      children: [
-                        Card(
-                          margin: EdgeInsets.only(left: 10, right: 10),
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            color: Colors.white,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      snapshot.data.data.anonim == 'true' ? 'Anonim' : snapshot.data.data.createdBy.toString(),
-                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+      ),
+      body: FutureBuilder<DetailForum>(
+        future: detailForum,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return LinearProgressIndicator();
+          } else {
+            return snapshot.hasData
+                ? ListView(
+                    padding: EdgeInsets.all(10),
+                    children: [
+                      Card(
+                        margin: EdgeInsets.only(left: 10, right: 10),
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          color: Colors.white,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    snapshot.data.data.anonim == 'true'
+                                        ? 'Anonim'
+                                        : snapshot.data.data.createdBy
+                                            .toString(),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 8),
+                                    padding: EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                        color:
+                                            Color.fromRGBO(230, 245, 245, 1)),
+                                    child: Text(
+                                      snapshot.data.data.topic,
+                                      style: TextStyle(color: Colors.blue),
                                     ),
-                                    Container(
-                                      margin: EdgeInsets.only(left: 8),
-                                      padding: EdgeInsets.all(5),
-                                      decoration: BoxDecoration(color: Color.fromRGBO(230, 245, 245, 1)),
-                                      child: Text(
-                                        snapshot.data.data.topic,
-                                        style: TextStyle(color: Colors.blue),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(snapshot.data.data.content),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        ElevatedButton(
-                                            style: ElevatedButton.styleFrom(primary: Colors.white),
-                                            onPressed: () {
-                                              setState(() {
-                                                jumlahLike += 1;
-                                              });
-                                            },
-                                            child: Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.thumb_up,
-                                                  color: Colors.black,
-                                                ),
-                                                Text(
-                                                  snapshot.data.data.likes.toString(),
-                                                  style: TextStyle(color: Colors.black),
-                                                )
-                                              ],
-                                            )),
-                                        SizedBox(width: 5),
-                                      ],
-                                    ),
-                                    Text(waktuPost)
-                                  ],
-                                )
-                              ],
-                            ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(snapshot.data.data.content),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              primary: Colors.white),
+                                          onPressed: () {
+                                            setState(() {
+                                              jumlahLike += 1;
+                                            });
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.thumb_up,
+                                                color: Colors.black,
+                                              ),
+                                              Text(
+                                                snapshot.data.data.likes
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    color: Colors.black),
+                                              )
+                                            ],
+                                          )),
+                                      SizedBox(width: 5),
+                                    ],
+                                  ),
+                                  Text(waktuPost)
+                                ],
+                              )
+                            ],
                           ),
                         ),
-                        SizedBox(
-                          height: 18,
-                        ),
+                      ),
+                      SizedBox(
+                        height: 18,
+                      ),
 
-                        for (int i = 0; i < snapshot.data.reply.length; i++) CommentItem(20) // id item)
-                      ],
-                    )
-                  : Container(
-                      child: Config.emptyData('Gagal memuat data', context),
-                    );
-            }
-          },
-        ));
+                      for (int i = 0; i < snapshot.data.reply.length; i++)
+                        CommentItem(20) // id item)
+                    ],
+                  )
+                : Container(
+                    child: Config.emptyData('Gagal memuat data', context),
+                  );
+          }
+        },
+      ),
+      floatingActionButton: Container(
+        margin: EdgeInsets.all(20),
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
+                height: 45,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+                decoration: BoxDecoration(
+                  // color: bgColor4,
+                  color: Color(0xffF0F0F1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: TextFormField(
+                    controller: replyController,
+                    decoration: InputDecoration.collapsed(
+                      hintText: 'Type Message...',
+                      // hintStyle: subTitleTextStyle,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 20,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                // color: primaryColor,++
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: TextButton(
+                onPressed: () {},
+                child: Image.asset(
+                  'assets/images/send.png',
+                  width: 21,
+                  height: 19,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
   }
 }
