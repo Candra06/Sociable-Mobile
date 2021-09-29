@@ -5,7 +5,6 @@ import 'package:sociable/Pages/Forum/searchLayout.dart';
 import 'package:sociable/Pages/Forum/widget/forum_item.dart';
 import 'package:sociable/helper/config.dart';
 import 'package:sociable/helper/route.dart';
-import 'add_new_forum/add_new_forum.dart';
 
 class ForumPage extends StatefulWidget {
   @override
@@ -91,7 +90,9 @@ class _ForumPageState extends State<ForumPage> {
                   color: Colors.black,
                 ),
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, Routes.LIST_CHAT);
+                    },
                     icon: Icon(
                       Icons.message,
                       color: Colors.black,

@@ -7,6 +7,12 @@ class Pref {
     return token;
   }
 
+  static isDiagnosa() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String isDiagnosa = preferences.getString('isDiagnosa');
+    return isDiagnosa;
+  }
+
   static getRole() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String token = preferences.getString('role');

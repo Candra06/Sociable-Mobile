@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sociable/MainPage.dart';
-import 'package:sociable/Pages/Akun/akun.dart';
+
 import 'package:sociable/Pages/Auth/Login/loginPage.dart';
 import 'package:sociable/Pages/Auth/Registrasi/registrationPage.dart';
 import 'package:sociable/Pages/Forum/add_new_forum/add_new_forum.dart';
+import 'package:sociable/Pages/Konsultasi/view/listRoom.dart';
+import 'package:sociable/Pages/Konsultasi/view/roomChat.dart';
 import 'package:sociable/Pages/splash.dart';
 
 class Routes {
@@ -15,6 +17,8 @@ class Routes {
   static const String HOME = '/home';
   static const String AKUN = '/akun';
   static const String ADD_FORUM = '/addforum';
+  static const String LIST_CHAT = '/list_room';
+  static const String ROOM_CHAT = '/room_chat';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -28,6 +32,10 @@ class Routes {
         return PageTransition(child: MainPage(), type: PageTransitionType.leftToRight);
       case ADD_FORUM:
         return PageTransition(child: AddNewForum(), type: PageTransitionType.bottomToTop);
+      case LIST_CHAT:
+        return PageTransition(child: ListRoomChar(), type: PageTransitionType.bottomToTop);
+      case ROOM_CHAT:
+        return PageTransition(child: RoomChat(), type: PageTransitionType.bottomToTop);
       // case AKUN:
       //   var data = settings.arguments;
       //   return PageTransition(
