@@ -51,7 +51,6 @@ class ForumRepository {
     }
   }
 
-<<<<<<< HEAD
   Future<List<CommentModel>> listComment(var id) async {
     var token = await Pref.getToken();
     http.Response res = await http.get(
@@ -65,16 +64,20 @@ class ForumRepository {
       return list.map((e) => CommentModel.fromJson(e)).toList();
       // return hasil;
       // print(res.body['reply']);
-=======
+    } else {
+      return [];
+    }
+  }
+
   Future<List<Forum>> historyForum() async {
     var token = await Pref.getToken();
-    http.Response res = await http.get(Uri.parse(EndPoint.listForum), headers: {'Authorization': 'Bearer ' + token});
+    http.Response res = await http.get(Uri.parse(EndPoint.listForum),
+        headers: {'Authorization': 'Bearer ' + token});
     var data = json.decode(res.body);
     print(data);
     if (res.statusCode == 200) {
       List<dynamic> list = data['data'];
       return list.map((e) => Forum.fromJson(e)).toList();
->>>>>>> master
     } else {
       return [];
     }
