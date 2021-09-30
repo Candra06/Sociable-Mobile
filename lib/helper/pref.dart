@@ -61,16 +61,15 @@ class Pref {
     return telepon;
   }
 
-<<<<<<< HEAD
   static like(id) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     bool like = preferences.getBool(id);
     return like;
-=======
-   static getMember() async {
+  }
+
+  static getMember() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String membership = preferences.getString('membership');
     return membership;
->>>>>>> master
   }
 }
