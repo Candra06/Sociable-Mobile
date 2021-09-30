@@ -55,7 +55,8 @@ class _ForumPageState extends State<ForumPage> {
           ),
           width: 150,
           height: 150,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(40), color: Colors.white),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(40), color: Colors.white),
         ),
       ),
       appBar: AppBar(
@@ -73,7 +74,8 @@ class _ForumPageState extends State<ForumPage> {
               children: [
                 IconButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
                       return SearchLayout();
                     }));
                   },
@@ -117,7 +119,6 @@ class _ForumPageState extends State<ForumPage> {
                       ? ListView.builder(
                           itemCount: snapshot.data.length,
                           itemBuilder: (BuildContext bc, int i) {
-<<<<<<< HEAD
                             return ForumItem(
                                 snapshot.data[i].id,
                                 snapshot.data[i].anonim,
@@ -129,10 +130,6 @@ class _ForumPageState extends State<ForumPage> {
                                 snapshot.data[i].likes,
                                 snapshot.data[i].likes,
                                 false);
-=======
-                            return ForumItem(snapshot.data[i].id, snapshot.data[i].anonim, snapshot.data[i].content, Config.formatDateInput(snapshot.data[i].createdAt.toString()),
-                                snapshot.data[i].name.toString(), snapshot.data[i].topic, snapshot.data[i].likes, snapshot.data[i].likes, true);
->>>>>>> master
                           })
                       : Container(
                           child: Config.emptyData('Belum ada forum', context),

@@ -10,15 +10,12 @@ class EndPoint {
   static final String addForum = api + 'forum/post';
   static final String historyForum = api + 'forum/history';
   static String detailForum(var id) => api + 'forum/detail/$id';
-<<<<<<< HEAD
   static String unlikeForum(var id) => api + 'forum/unlike/$id';
   static String likeForum(var id) => api + 'forum/like/$id';
-=======
 
   // Membership
   static final String getMember = api + 'membership/get';
 
->>>>>>> master
   //Diagnosa
   static final String showQuestion = api + 'diagnosa/show';
   static final String answer = api + 'diagnosa/diagnosaUser';
