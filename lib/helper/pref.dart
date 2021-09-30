@@ -60,4 +60,10 @@ class Pref {
     String telepon = preferences.getString('level_diagnosa');
     return telepon;
   }
+
+  static like(id) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    bool like = preferences.getBool(id);
+    return like;
+  }
 }

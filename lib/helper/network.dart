@@ -9,7 +9,8 @@ class EndPoint {
   static final String listForum = api + 'forum/all';
   static final String addForum = api + 'forum/post';
   static String detailForum(var id) => api + 'forum/detail/$id';
-
+  static String unlikeForum(var id) => api + 'forum/unlike/$id';
+  static String likeForum(var id) => api + 'forum/like/$id';
   //Diagnosa
   static final String showQuestion = api + 'diagnosa/show';
   static final String answer = api + 'diagnosa/diagnosaUser';
