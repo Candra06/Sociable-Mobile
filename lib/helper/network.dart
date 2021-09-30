@@ -11,6 +11,10 @@ class EndPoint {
   static final String historyForum = api + 'forum/history';
   static String detailForum(var id) => api + 'forum/detail/$id';
 
+  static String unlikeForum(var id) => api + 'forum/unlike/$id';
+  static String likeForum(var id) => api + 'forum/like/$id';
+
+
   // Membership
   static final String getMember = api + 'membership/get';
 

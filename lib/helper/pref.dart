@@ -61,7 +61,13 @@ class Pref {
     return telepon;
   }
 
-   static getMember() async {
+  static like(id) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    bool like = preferences.getBool(id);
+    return like;
+  }
+
+  static getMember() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String membership = preferences.getString('membership');
     return membership;

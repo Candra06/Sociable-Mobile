@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sociable/Pages/Forum/model/forum.dart';
 import 'package:sociable/Pages/Forum/repository/forumRepo.dart';
 import 'package:sociable/Pages/Forum/searchLayout.dart';
 import 'package:sociable/Pages/Forum/widget/forum_item.dart';
 import 'package:sociable/helper/config.dart';
+import 'package:sociable/helper/pref.dart';
 import 'package:sociable/helper/route.dart';
 
 class ForumPage extends StatefulWidget {
@@ -20,7 +22,7 @@ class _ForumPageState extends State<ForumPage> {
     setState(() {
       load = true;
     });
-    print(load);
+    // print(load);
     forumItem = repository.listForum();
     setState(() {
       load = false;
@@ -30,6 +32,7 @@ class _ForumPageState extends State<ForumPage> {
   @override
   void initState() {
     getData();
+
     super.initState();
   }
 
@@ -114,8 +117,19 @@ class _ForumPageState extends State<ForumPage> {
                       ? ListView.builder(
                           itemCount: snapshot.data.length,
                           itemBuilder: (BuildContext bc, int i) {
-                            return ForumItem(snapshot.data[i].id, snapshot.data[i].anonim, snapshot.data[i].content, Config.formatDateInput(snapshot.data[i].createdAt.toString()),
-                                snapshot.data[i].name.toString(), snapshot.data[i].topic, snapshot.data[i].likes, snapshot.data[i].likes, true);
+
+                            return ForumItem(
+                                snapshot.data[i].id,
+                                snapshot.data[i].anonim,
+                                snapshot.data[i].content,
+                                Config.formatDateInput(
+                                    snapshot.data[i].createdAt.toString()),
+                                snapshot.data[i].name.toString(),
+                                snapshot.data[i].topic,
+                                snapshot.data[i].likes,
+                                snapshot.data[i].likes,
+                                false);
+
                           })
                       : Container(
                           child: Config.emptyData('Belum ada forum', context),
