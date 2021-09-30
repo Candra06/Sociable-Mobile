@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sociable/Pages/Forum/model/forum.dart';
+import 'package:sociable/Pages/Forum/repository/forumRepo.dart';
 import 'package:sociable/Pages/Forum/widget/forum_item.dart';
 import 'package:sociable/Pages/Membership/membership.dart';
+import 'package:sociable/helper/config.dart';
 import 'package:sociable/helper/pref.dart';
 import 'package:sociable/helper/route.dart';
 
@@ -16,8 +19,23 @@ class AkunPage extends StatefulWidget {
 class _AkunPageState extends State<AkunPage> {
   String name = "Budi Hartono";
   String levelDiagnosa = "SAD Ringan";
-  String memberShip = "Basic";
+  String memberShip = "false";
   String token = '';
+
+  Future<List<Forum>> forumItem;
+  ForumRepository repository = ForumRepository();
+  bool load = true;
+
+  void getData() async {
+    setState(() {
+      load = true;
+    });
+    print(load);
+    forumItem = repository.historyForum();
+    setState(() {
+      load = false;
+    });
+  }
 
   void logout() async {
     showDialog(
@@ -47,11 +65,14 @@ class _AkunPageState extends State<AkunPage> {
     var xnama = await Pref.getNama();
     var xlevel = await Pref.getLevel();
     var xtoken = await Pref.getToken();
+    var xmember = await Pref.getMember();
+    print('member ' + xmember);
     setState(() {
       name = xnama;
       levelDiagnosa = xlevel;
       name = xnama;
       token = xtoken;
+      memberShip = xmember;
     });
   }
 
@@ -72,7 +93,7 @@ class _AkunPageState extends State<AkunPage> {
                 ),
                 fit: BoxFit.cover)),
         child: SafeArea(
-          child: ListView(
+          child: Column(
             children: [
               Container(
                 width: double.infinity,
@@ -111,7 +132,7 @@ class _AkunPageState extends State<AkunPage> {
                       ),
                       InkWell(
                         onTap: () {
-                          if (memberShip == "Basic") {
+                          if (memberShip == "true") {
                             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                               return MemberShipPage();
                             }));
@@ -124,13 +145,13 @@ class _AkunPageState extends State<AkunPage> {
                             SizedBox(
                               width: 5,
                             ),
-                            if (memberShip == "Premium")
+                            if (memberShip == "true")
                               Icon(
                                 Icons.payment,
                                 color: Colors.amber,
                               )
                             else
-                              Icon(Icons.payment)
+                              Container()
                           ],
                         ),
                       ),
@@ -147,16 +168,29 @@ class _AkunPageState extends State<AkunPage> {
               Column(
                 children: [
                   Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.all(13),
-                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(30))),
-                    child: Column(
-                      children: [
-                        for (int i = 0; i < 10; i++) ForumItem(i, "isiForum", 'true', "10 menit yang lalu", "penulis", "forumTopik", i * i * i, i * i, true)
-                        // ForumItem(idForum, "isiForum", "waktuPosting", "penulis", "forumTopik", "jumlahLike", "jumlahKomentar", "isLike")
-                      ],
-                    ),
-                  )
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.all(13),
+                      constraints: BoxConstraints(minHeight: 303, maxHeight: MediaQuery.of(context).size.height * 0.533),
+                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(30))),
+                      child: FutureBuilder(
+                        future: forumItem,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return Config.loader('Memuat data');
+                          } else {
+                            return snapshot.hasData
+                                ? ListView.builder(
+                                    itemCount: snapshot.data.length,
+                                    itemBuilder: (BuildContext bc, int i) {
+                                      return ForumItem(snapshot.data[i].id, snapshot.data[i].anonim, snapshot.data[i].content, Config.formatDateInput(snapshot.data[i].createdAt.toString()),
+                                          snapshot.data[i].name.toString(), snapshot.data[i].topic, snapshot.data[i].likes, snapshot.data[i].likes, false);
+                                    })
+                                : Container(
+                                    child: Config.emptyData('Belum ada forum', context),
+                                  );
+                          }
+                        },
+                      ))
                 ],
               )
             ],

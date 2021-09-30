@@ -37,7 +37,7 @@ class _RoomChatState extends State<RoomChat> {
             },
             icon: Icon(Icons.arrow_back, color: Config.textBlack)),
         title: Text(
-          "Dr. Deddy Corbuzier",
+          "Norhendra Ardhanaputra, S.Psi",
           style: TextStyle(color: Colors.black, fontSize: 25),
         ),
       ),

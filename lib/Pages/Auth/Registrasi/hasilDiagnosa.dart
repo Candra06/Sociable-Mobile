@@ -34,11 +34,15 @@ class _HasilDiagnosaState extends State<HasilDiagnosa> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         shadowColor: Colors.white,
-        title: Center(
-            child: Text(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, Routes.HOME);
+            },
+            icon: Icon(Icons.arrow_back_ios, color: Config.textBlack)),
+        title: Text(
           "HASIL DIAGNOSA",
-          style: TextStyle(fontSize: 20, color: Colors.black),
-        )),
+          style: TextStyle(color: Colors.black, fontSize: 25),
+        ),
       ),
       body: Stack(
         children: [
@@ -49,7 +53,7 @@ class _HasilDiagnosaState extends State<HasilDiagnosa> {
                 height: 280,
               )),
           Container(
-            margin: EdgeInsets.only(left: 185, top: 80),
+            margin: EdgeInsets.only(left: 185, top: 60),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
