@@ -155,9 +155,7 @@ class _HasilDiagnosaState extends State<HasilDiagnosa> {
                             style: TextStyle(fontSize: 20, color: Colors.black),
                           ),
                           onPressed: () {
-                            // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
-                            //   return MainPage();
-                            // }));
+                            submit();
                           },
                         ),
                       ),

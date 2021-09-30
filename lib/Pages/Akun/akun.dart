@@ -170,7 +170,7 @@ class _AkunPageState extends State<AkunPage> {
                   Container(
                       width: MediaQuery.of(context).size.width,
                       padding: EdgeInsets.all(13),
-                      constraints: BoxConstraints(minHeight: 303, maxHeight: MediaQuery.of(context).size.height * 0.533),
+                      constraints: BoxConstraints(minHeight: 200, maxHeight: MediaQuery.of(context).size.height * 0.53),
                       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(30))),
                       child: FutureBuilder(
                         future: forumItem,
