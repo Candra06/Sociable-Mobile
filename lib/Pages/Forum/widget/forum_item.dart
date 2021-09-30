@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sociable/Pages/Forum/reply_forum/replyForum.dart';
+import 'package:sociable/Pages/Forum/repository/item_repository.dart';
+import 'package:sociable/helper/pref.dart';
 
 class ForumItem extends StatefulWidget {
   // const ForumItem({Key? key}) : super(key: key);
@@ -12,7 +15,6 @@ class ForumItem extends StatefulWidget {
   int jumlahLike;
   int jumlahKomentar;
   bool isLike;
-
   ForumItem(
     this.idForum,
     this.isAnonim,
@@ -30,8 +32,51 @@ class ForumItem extends StatefulWidget {
 }
 
 class _ForumItemState extends State<ForumItem> {
+  ItemRepository itemRepository = ItemRepository();
+  String like;
+  Color likeColor = Colors.black;
+  bool isLike;
+  getisLike() async {
+    isLike = await Pref.like(widget.idForum.toString());
+  }
+
+  setisLike(value) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setBool(widget.idForum.toString(), value);
+    setState(() {
+      isLike = value;
+    });
+  }
+
+  changeColor() async {
+    isLike = await Pref.like(widget.idForum.toString());
+    setState(() {
+      if (isLike == true) {
+        likeColor = Colors.blue;
+      } else {
+        likeColor = Colors.black;
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    getisLike();
+    changeColor();
+    // setState(() {
+    //   if (isLike) {
+    //     likeColor = Colors.blue;
+    //   } else {
+    //     likeColor = Colors.black;
+    //   }
+    // });
+    print(isLike);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    // print(like);
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       margin: EdgeInsets.only(top: 10, left: 10, right: 10),
@@ -84,40 +129,35 @@ class _ForumItemState extends State<ForumItem> {
                   children: [
                     Row(
                       children: [
-                        if (widget.isLike == false)
-                          IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  if (widget.isLike == false) {
-                                    widget.jumlahLike += 1;
-                                    widget.isLike = true;
-                                  } else {
-                                    widget.jumlahLike -= 1;
-                                    widget.isLike = false;
-                                  }
-                                });
-                              },
-                              icon: Icon(
-                                Icons.thumb_up,
-                                color: Colors.black,
-                              ))
-                        else
-                          IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  if (widget.isLike == false) {
-                                    widget.jumlahLike += 1;
-                                    widget.isLike = true;
-                                  } else {
-                                    widget.jumlahLike -= 1;
-                                    widget.isLike = false;
-                                  }
-                                });
-                              },
-                              icon: Icon(
-                                Icons.thumb_up,
-                                color: Colors.blue,
-                              )),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              if (isLike == null || isLike == false) {
+                                print(isLike);
+                                print(itemRepository.like(widget.idForum));
+                                widget.jumlahLike += 1;
+                                widget.isLike = true;
+                                setisLike(true);
+                                likeColor = Colors.blue;
+                                // setLike('true');
+                              } else {
+                                print(isLike);
+
+                                print(itemRepository.unlike(
+                                    widget.idForum, widget.jumlahLike));
+                                widget.jumlahLike -= 1;
+                                widget.isLike = false;
+                                setisLike(false);
+                                likeColor = Colors.black;
+                                // setLike('false');
+                              }
+                            });
+                          },
+                          icon: Icon(
+                            Icons.thumb_up,
+                            color: likeColor,
+                          ),
+                        ),
                         Text(
                           widget.jumlahLike.toString(),
                           style: TextStyle(color: Colors.black),
@@ -131,7 +171,14 @@ class _ForumItemState extends State<ForumItem> {
                           onPressed: () {
                             Navigator.of(context)
                                 .push(MaterialPageRoute(builder: (context) {
-                              return ReplyForumPage(widget.idForum.toString());
+                              return ReplyForumPage(
+                                idForum: widget.idForum.toString(),
+                                conten: widget.isiForum,
+                                waktu: widget.waktuPosting,
+                                jumlahLike: widget.jumlahLike,
+                                author: widget.penulis,
+                                anonim: widget.isAnonim,
+                              );
                             }));
                           },
                           icon: Icon(
