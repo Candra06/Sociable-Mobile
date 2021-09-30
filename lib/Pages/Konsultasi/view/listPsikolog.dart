@@ -30,7 +30,7 @@ class _ListPsikologState extends State<ListPsikolog> {
                       children: <Widget>[
                         Text(
                           // kelas[i]['nama'],
-                          'Dr. Deddy Corbuzier',
+                          'Norhendra Ardhanaputra, S.Psi',
                           style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w500),
                         ),
                         SizedBox(height: 10),
@@ -40,7 +40,7 @@ class _ListPsikologState extends State<ListPsikolog> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'deddy.corbuzier@gmail.com',
+                              'Norhendra@gmail.com',
                               style: TextStyle(fontFamily: 'AirbnbMedium', fontSize: 12, color: Config.textGrey),
                             )
                           ],

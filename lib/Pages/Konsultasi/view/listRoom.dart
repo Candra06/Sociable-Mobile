@@ -34,7 +34,7 @@ class _ListRoomCharState extends State<ListRoomChar> {
                           children: [
                             Text(
                               // kelas[i]['nama'],
-                              'Dr. Deddy Corbuzier',
+                              'Norhendra Ardhanaputra, S.Psi',
                               style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w500),
                             ),
                             Text(
