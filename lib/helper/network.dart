@@ -8,7 +8,11 @@ class EndPoint {
   static String detailKonten(var id) => api + 'artikel/$id';
   static final String listForum = api + 'forum/all';
   static final String addForum = api + 'forum/post';
+  static final String historyForum = api + 'forum/history';
   static String detailForum(var id) => api + 'forum/detail/$id';
+
+  // Membership
+  static final String getMember = api + 'membership/get';
 
   //Diagnosa
   static final String showQuestion = api + 'diagnosa/show';
@@ -16,4 +20,7 @@ class EndPoint {
 
   //Challenge
   static final String insertChallenge = api + 'challenge/insert';
+  static final String showChallenge = api + 'challenge/show';
+  static String detailChallenge(String id) => api + 'challenge/detail/$id';
+  static String finishChallenge(String id) => api + 'challenge/finish/$id';
 }

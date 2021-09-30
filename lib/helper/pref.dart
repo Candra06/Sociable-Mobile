@@ -60,4 +60,10 @@ class Pref {
     String telepon = preferences.getString('level_diagnosa');
     return telepon;
   }
+
+   static getMember() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String membership = preferences.getString('membership');
+    return membership;
+  }
 }

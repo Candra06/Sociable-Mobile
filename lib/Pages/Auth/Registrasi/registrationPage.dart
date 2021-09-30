@@ -118,7 +118,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               autofocus: false,
               controller: tanggalLahirInput,
               onTap: () {
-                showDatePicker(context: context, initialDate: _dateTime == null ? DateTime.now() : _dateTime, firstDate: DateTime(2020), lastDate: DateTime.now()).then((date) {
+                showDatePicker(context: context, initialDate: _dateTime == null ? DateTime.now() : _dateTime, firstDate: DateTime(1945), lastDate: DateTime.now()).then((date) {
                   if (date != null) {
                     setState(() {
                       _dateTime = date;
@@ -223,7 +223,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     } else {
                       regsiter();
                     }
-                    
                   },
                 ),
               ),
