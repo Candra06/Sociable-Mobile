@@ -5,6 +5,8 @@ import 'package:sociable/MainPage.dart';
 
 import 'package:sociable/Pages/Auth/Login/loginPage.dart';
 import 'package:sociable/Pages/Auth/Registrasi/registrationPage.dart';
+import 'package:sociable/Pages/Challenges/detail_challenges/detailChallanges.dart';
+import 'package:sociable/Pages/Challenges/widget/challenges_item.dart';
 import 'package:sociable/Pages/Forum/add_new_forum/add_new_forum.dart';
 import 'package:sociable/Pages/Konsultasi/view/listRoom.dart';
 import 'package:sociable/Pages/Konsultasi/view/roomChat.dart';
@@ -19,6 +21,7 @@ class Routes {
   static const String ADD_FORUM = '/addforum';
   static const String LIST_CHAT = '/list_room';
   static const String ROOM_CHAT = '/room_chat';
+  static const String DETAIL_CHALLENGE = '/detail_challenge';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -36,6 +39,8 @@ class Routes {
         return PageTransition(child: ListRoomChar(), type: PageTransitionType.bottomToTop);
       case ROOM_CHAT:
         return PageTransition(child: RoomChat(), type: PageTransitionType.bottomToTop);
+      case DETAIL_CHALLENGE:
+        return PageTransition(child: DetailChallenges(idChallenges: settings.arguments), type: PageTransitionType.bottomToTop);
       // case AKUN:
       //   var data = settings.arguments;
       //   return PageTransition(

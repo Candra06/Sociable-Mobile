@@ -44,4 +44,17 @@ class ForumRepository {
       return false;
     }
   }
+
+  Future<List<Forum>> historyForum() async {
+    var token = await Pref.getToken();
+    http.Response res = await http.get(Uri.parse(EndPoint.listForum), headers: {'Authorization': 'Bearer ' + token});
+    var data = json.decode(res.body);
+    print(data);
+    if (res.statusCode == 200) {
+      List<dynamic> list = data['data'];
+      return list.map((e) => Forum.fromJson(e)).toList();
+    } else {
+      return [];
+    }
+  }
 }

@@ -38,6 +38,7 @@ class _LoginPageState extends State<LoginPage> {
       pref.setString('role', auth.role.toString());
       pref.setString('token', auth.token);
       pref.setString('gender', auth.gender);
+      pref.setString('membership', auth.membership.toString());
       pref.setString('birthDate', auth.birthDate.toString());
       Config.alert(1, 'Login berhasil');
       Navigator.pop(context);

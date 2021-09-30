@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sociable/Pages/Auth/Login/loginPage.dart';
 import 'package:sociable/Pages/Auth/Registrasi/diagnosa.dart';
+import 'package:sociable/Pages/Membership/model/membership_model.dart';
+import 'package:sociable/Pages/Membership/repository/membership_repository.dart';
 import 'package:sociable/helper/pref.dart';
 import 'package:sociable/helper/route.dart';
 
@@ -16,10 +19,33 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
   AnimationController _controller;
   Animation<double> _animation;
+  String token = '';
+
+  void getData() async {
+    var tmpToken = await Pref.getToken();
+    print(tmpToken);
+    if (tmpToken != null) {
+      print('kosong');
+      getMembership();
+    }
+  }
+
+  void getMembership() async {
+    MemberRepository repository = new MemberRepository();
+    Membership membership = new Membership();
+    await repository.getMembership().then((value) => {membership = value});
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    if (membership.status == true) {
+      pref.setString('membership', 'true');
+    } else {
+      pref.setString('membership', 'false');
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    getData();
     _controller = AnimationController(duration: const Duration(milliseconds: 2000), vsync: this, value: 0.1);
     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
 

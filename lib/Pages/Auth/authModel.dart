@@ -10,6 +10,7 @@ class Auth {
     this.levelDiagnosa,
     this.gender,
     this.token,
+    this.membership,
   });
 
   int id;
@@ -21,6 +22,7 @@ class Auth {
   DateTime birthDate;
   String levelDiagnosa;
   String gender;
+  bool membership;
   String token;
 
   factory Auth.fromJson(Map<String, dynamic> json) => Auth(
@@ -33,6 +35,7 @@ class Auth {
         levelDiagnosa: json["level_diagnosa"] == null ? null : json["level_diagnosa"],
         gender: json["gender"] == null ? null : json["gender"],
         token: json["token"] == null ? null : json["token"],
+        membership: json["membership"] == null ? null : json["membership"],
       );
 
   Map<String, dynamic> toJson() => {
