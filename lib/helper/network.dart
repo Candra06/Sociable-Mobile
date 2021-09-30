@@ -25,4 +25,6 @@ class EndPoint {
   static final String showChallenge = api + 'challenge/show';
   static String detailChallenge(String id) => api + 'challenge/detail/$id';
   static String finishChallenge(String id) => api + 'challenge/finish/$id';
+
+  static String comment(var id) => api + 'forum/reply/$id';
 }

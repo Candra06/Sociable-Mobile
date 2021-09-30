@@ -59,8 +59,9 @@ class ForumRepository {
     );
     if (res.statusCode == 200) {
       var data = json.decode(res.body);
-      print(data['reply']);
+      // print(data['reply']);
       List<dynamic> list = data['reply'];
+      print(list.length);
       return list.map((e) => CommentModel.fromJson(e)).toList();
     } else {
       return [];
@@ -80,6 +81,23 @@ class ForumRepository {
       return list.map((e) => Forum.fromJson(e)).toList();
     } else {
       return [];
+    }
+  }
+
+  Future<bool> komen(var id, content) async {
+    var token = await Pref.getToken();
+    http.Response res = await http.post(
+      Uri.parse(EndPoint.comment(id)),
+      headers: {'Authorization': 'Bearer ' + token},
+      body: content,
+    );
+
+    print(res.body);
+    print(EndPoint.comment(id));
+    if (res.statusCode == 200) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

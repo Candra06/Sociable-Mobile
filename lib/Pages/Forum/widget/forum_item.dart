@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sociable/Pages/Forum/model/comment_model.dart';
 import 'package:sociable/Pages/Forum/reply_forum/replyForum.dart';
+import 'package:sociable/Pages/Forum/repository/forumRepo.dart';
 import 'package:sociable/Pages/Forum/repository/item_repository.dart';
 import 'package:sociable/helper/pref.dart';
 
@@ -33,6 +35,8 @@ class ForumItem extends StatefulWidget {
 
 class _ForumItemState extends State<ForumItem> {
   ItemRepository itemRepository = ItemRepository();
+
+  Future<List<CommentModel>> commentList;
   String like;
   Color likeColor = Colors.black;
   bool isLike;
@@ -63,14 +67,7 @@ class _ForumItemState extends State<ForumItem> {
   void initState() {
     getisLike();
     changeColor();
-    // setState(() {
-    //   if (isLike) {
-    //     likeColor = Colors.blue;
-    //   } else {
-    //     likeColor = Colors.black;
-    //   }
-    // });
-    print(isLike);
+
     super.initState();
   }
 
