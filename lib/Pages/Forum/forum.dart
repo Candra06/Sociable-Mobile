@@ -55,7 +55,8 @@ class _ForumPageState extends State<ForumPage> {
           ),
           width: 150,
           height: 150,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(40), color: Colors.white),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(40), color: Colors.white),
         ),
       ),
       appBar: AppBar(
@@ -73,7 +74,8 @@ class _ForumPageState extends State<ForumPage> {
               children: [
                 IconButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
                       return SearchLayout();
                     }));
                   },
