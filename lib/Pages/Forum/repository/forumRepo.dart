@@ -63,13 +63,13 @@ class ForumRepository {
       List<dynamic> list = data['reply'];
       print(list.length);
       return list.map((e) => CommentModel.fromJson(e)).toList();
+
     } else {
       return [];
     }
   }
 
-  // return hasil;
-  // print(res.body['reply']);
+
   Future<List<Forum>> historyForum() async {
     var token = await Pref.getToken();
     http.Response res = await http.get(Uri.parse(EndPoint.listForum),

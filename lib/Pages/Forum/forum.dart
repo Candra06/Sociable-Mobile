@@ -119,6 +119,7 @@ class _ForumPageState extends State<ForumPage> {
                       ? ListView.builder(
                           itemCount: snapshot.data.length,
                           itemBuilder: (BuildContext bc, int i) {
+
                             return ForumItem(
                                 snapshot.data[i].id,
                                 snapshot.data[i].anonim,
@@ -130,6 +131,7 @@ class _ForumPageState extends State<ForumPage> {
                                 snapshot.data[i].likes,
                                 snapshot.data[i].likes,
                                 false);
+
                           })
                       : Container(
                           child: Config.emptyData('Belum ada forum', context),
