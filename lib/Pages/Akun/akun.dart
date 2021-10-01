@@ -93,107 +93,109 @@ class _AkunPageState extends State<AkunPage> {
                 ),
                 fit: BoxFit.cover)),
         child: SafeArea(
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.only(bottom: 20),
-                // color: Color.fromRGBO(118, 171, 255, 1),
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "PROFIL",
-                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25),
-                          ),
-                          IconButton(
-                              onPressed: () {
-                                logout();
-                              },
-                              icon: Icon(
-                                Icons.logout,
-                                color: Colors.black,
-                                size: 30,
-                              ))
-                        ],
-                      ),
-                      Container(
-                        width: 100,
-                        height: 100,
-                        decoration:
-                            BoxDecoration(borderRadius: BorderRadius.circular(50), color: Colors.green, image: DecorationImage(image: AssetImage("assets/images/avatar.png"), fit: BoxFit.cover)),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          if (memberShip == "true") {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                              return MemberShipPage();
-                            }));
-                          }
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.only(bottom: 20),
+                  // color: Color.fromRGBO(118, 171, 255, 1),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(name, style: TextStyle(color: Colors.black, fontSize: 25)),
-                            SizedBox(
-                              width: 5,
+                            Text(
+                              "PROFIL",
+                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25),
                             ),
-                            if (memberShip == "true")
-                              Icon(
-                                Icons.payment,
-                                color: Colors.amber,
-                              )
-                            else
-                              Container()
+                            IconButton(
+                                onPressed: () {
+                                  logout();
+                                },
+                                icon: Icon(
+                                  Icons.logout,
+                                  color: Colors.black,
+                                  size: 30,
+                                ))
                           ],
                         ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(23)),
-                        child: Text(levelDiagnosa),
-                      )
-                    ],
+                        Container(
+                          width: 100,
+                          height: 100,
+                          decoration:
+                              BoxDecoration(borderRadius: BorderRadius.circular(50), color: Colors.green, image: DecorationImage(image: AssetImage("assets/images/profile.png"), fit: BoxFit.cover)),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            if (memberShip == "true") {
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                                return MemberShipPage();
+                              }));
+                            }
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(name, style: TextStyle(color: Colors.black, fontSize: 25)),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              if (memberShip == "true")
+                                Icon(
+                                  Icons.payment,
+                                  color: Colors.amber,
+                                )
+                              else
+                                Container()
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 10),
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(23)),
+                          child: Text(levelDiagnosa),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Column(
-                children: [
-                  Container(
-                      width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.all(13),
-                      constraints: BoxConstraints(minHeight: 303, maxHeight: MediaQuery.of(context).size.height * 0.533),
-                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(30))),
-                      child: FutureBuilder(
-                        future: forumItem,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return Config.loader('Memuat data');
-                          } else {
-                            return snapshot.hasData
-                                ? ListView.builder(
-                                    itemCount: snapshot.data.length,
-                                    itemBuilder: (BuildContext bc, int i) {
-                                      return ForumItem(snapshot.data[i].id, snapshot.data[i].anonim, snapshot.data[i].content, Config.formatDateInput(snapshot.data[i].createdAt.toString()),
-                                          snapshot.data[i].name.toString(), snapshot.data[i].topic, snapshot.data[i].likes, snapshot.data[i].likes, false);
-                                    })
-                                : Container(
-                                    child: Config.emptyData('Belum ada forum', context),
-                                  );
-                          }
-                        },
-                      ))
-                ],
-              )
-            ],
+                Column(
+                  children: [
+                    Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: EdgeInsets.all(13),
+                        constraints: BoxConstraints(minHeight: 303, maxHeight: MediaQuery.of(context).size.height * 0.533),
+                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(30))),
+                        child: FutureBuilder(
+                          future: forumItem,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return Config.loader('Memuat data');
+                            } else {
+                              return snapshot.hasData
+                                  ? ListView.builder(
+                                      itemCount: snapshot.data.length,
+                                      itemBuilder: (BuildContext bc, int i) {
+                                        return ForumItem(snapshot.data[i].id, snapshot.data[i].anonim, snapshot.data[i].content, Config.formatDateInput(snapshot.data[i].createdAt.toString()),
+                                            snapshot.data[i].name.toString(), snapshot.data[i].topic, snapshot.data[i].likes, snapshot.data[i].likes, false);
+                                      })
+                                  : Container(
+                                      child: Config.emptyData('Belum ada forum', context),
+                                    );
+                            }
+                          },
+                        ))
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

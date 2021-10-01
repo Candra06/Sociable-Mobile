@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sociable">
-   <application
+  <uses-permission android:name="android.permission.INTERNET"/>  
+    <application
         android:label="sociable"
         android:icon="@mipmap/ic_launcher">
         <activity
