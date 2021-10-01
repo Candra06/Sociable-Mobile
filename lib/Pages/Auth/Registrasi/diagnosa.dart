@@ -137,8 +137,10 @@ class _DiagnosaPageState extends State<DiagnosaPage> {
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.blue[200],
-            // image: DecorationImage(image: AssetImage("assets/images/registrasi/diagnosa.jpg",),fit: BoxFit.cover),
+            // color: Colors.blue[200],
+            image: DecorationImage(image: AssetImage(
+                  "assets/images/bg.png",
+                ),fit: BoxFit.cover),
           ),
           child: FutureBuilder<List<Question>>(
               future: question,
@@ -161,7 +163,7 @@ class _DiagnosaPageState extends State<DiagnosaPage> {
                         children: [
                           Container(
                             margin: EdgeInsets.only(
-                              top: 205,
+                              top: 160,
                               left: 58,
                               right: 58,
                             ),
@@ -174,7 +176,7 @@ class _DiagnosaPageState extends State<DiagnosaPage> {
                           ),
                           Container(
                             margin: EdgeInsets.only(
-                              top: 171,
+                              top: 121,
                               left: 46,
                               right: 46,
                             ),
@@ -187,7 +189,7 @@ class _DiagnosaPageState extends State<DiagnosaPage> {
                           ),
                           Container(
                             margin: EdgeInsets.only(
-                              top: 131,
+                              top: 81,
                               left: 35,
                               right: 35,
                             ),
