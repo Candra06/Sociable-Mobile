@@ -28,19 +28,28 @@ class Routes {
       case SPLASH:
         return MaterialPageRoute(builder: (_) => SplashScreen());
       case LOGIN:
-        return PageTransition(child: LoginPage(), type: PageTransitionType.leftToRight);
+        return PageTransition(
+            child: LoginPage(), type: PageTransitionType.leftToRight);
       case REGISTER:
-        return PageTransition(child: RegistrationPage(), type: PageTransitionType.leftToRight);
+        return PageTransition(
+            child: RegistrationPage(), type: PageTransitionType.leftToRight);
       case HOME:
-        return PageTransition(child: MainPage(), type: PageTransitionType.leftToRight);
+        return PageTransition(
+            child: MainPage(), type: PageTransitionType.leftToRight);
       case ADD_FORUM:
-        return PageTransition(child: AddNewForum(), type: PageTransitionType.bottomToTop);
+        return PageTransition(
+            child: AddNewForum(), type: PageTransitionType.bottomToTop);
       case LIST_CHAT:
-        return PageTransition(child: ListRoomChar(), type: PageTransitionType.bottomToTop);
+        return PageTransition(
+            child: ListRoomChar(), type: PageTransitionType.bottomToTop);
       case ROOM_CHAT:
-        return PageTransition(child: RoomChat(), type: PageTransitionType.bottomToTop);
+        return PageTransition(
+            child: RoomChat(), type: PageTransitionType.bottomToTop);
       case DETAIL_CHALLENGE:
-        return PageTransition(child: DetailChallenges(idChallenges: settings.arguments), type: PageTransitionType.bottomToTop);
+        return PageTransition(
+            child: DetailChallenges(idChallenges: settings.arguments),
+            type: PageTransitionType.bottomToTop);
+
       // case AKUN:
       //   var data = settings.arguments;
       //   return PageTransition(

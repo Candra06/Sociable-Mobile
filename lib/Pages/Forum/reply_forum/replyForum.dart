@@ -39,6 +39,7 @@ class _ReplyForumPageState extends State<ReplyForumPage> {
   ForumRepository commentRepository = ForumRepository();
   Future<List<CommentModel>> commentModel;
   TextEditingController replyController = new TextEditingController();
+  CommentModel comment = new CommentModel();
   void getData() async {
     setState(() {
       load = true;
@@ -48,6 +49,28 @@ class _ReplyForumPageState extends State<ReplyForumPage> {
       // detailForum = data;
       load = false;
     });
+  }
+
+  void saveForum() async {
+    setState(() {
+      Config.loading(context);
+    });
+    comment.conten = replyController.text;
+
+    bool respon = await commentRepository
+        .komen(widget.idForum, {'content': replyController.text});
+    if (respon) {
+      replyController.text = '';
+      Navigator.pop(context);
+      Config.alert(1, 'Berhasil menambahka forum');
+      setState(() {
+        getData();
+      });
+      // Navigator.pushNamed(context, Routes.HOME);
+    } else {
+      Navigator.pop(context);
+      Config.alert(0, 'Gagal menambahka forum');
+    }
   }
 
   getisLike() async {
@@ -255,7 +278,9 @@ class _ReplyForumPageState extends State<ReplyForumPage> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      saveForum();
+                    },
                     icon: Image.asset(
                       'assets/images/send.png',
                       width: 21,

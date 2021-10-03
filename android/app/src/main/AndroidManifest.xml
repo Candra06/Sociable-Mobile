@@ -1,9 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sociable">
+<<<<<<< HEAD
       <uses-permission android:name="android.permission.INTERNET"/>
 
    <application
         android:label="Sociable"
+=======
+  <uses-permission android:name="android.permission.INTERNET"/>  
+    <application
+        android:label="sociable"
+>>>>>>> e166582270df276817d0b5e01e1e732f529e40c6
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

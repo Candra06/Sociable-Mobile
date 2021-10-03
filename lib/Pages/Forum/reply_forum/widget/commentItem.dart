@@ -21,7 +21,7 @@ class _CommentItemState extends State<CommentItem> {
       ),
       margin: EdgeInsets.symmetric(
         horizontal: 35,
-        vertical: 20,
+        vertical: 10,
       ),
       decoration: BoxDecoration(
         color: Colors.white,

@@ -28,7 +28,8 @@ class _LoginPageState extends State<LoginPage> {
     auth.username = txtUsername.text;
     auth.password = txtPassword.text;
 
-    dynamic respon = await repository.loginProses(auth).then((value) => {auth = value});
+    dynamic respon =
+        await repository.loginProses(auth).then((value) => {auth = value});
     bool res;
     if (respon != null) {
       SharedPreferences pref = await SharedPreferences.getInstance();
@@ -47,7 +48,8 @@ class _LoginPageState extends State<LoginPage> {
         pref.setString('level_diagnosa', '-');
         pref.setString('isDiagnosa', 'true');
         setState(() {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+          Navigator.of(context)
+              .pushReplacement(MaterialPageRoute(builder: (context) {
             return DiagnosaPage();
           }));
         });
@@ -69,93 +71,99 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
-      body: Padding(
+      body: Container(
         padding: EdgeInsets.only(right: 30, left: 30),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image(
-              image: AssetImage("assets/images/logo.png"),
-              width: 181,
-              height: 195,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextField(
-              autofocus: false,
-              controller: txtUsername,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(40)),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image(
+                  image: AssetImage("assets/images/logo.png"),
+                  width: 181,
+                  height: 195,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextField(
+                  autofocus: false,
+                  controller: txtUsername,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(40)),
 
-                hintText: "Username",
-                // labelText: "Username",
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            TextField(
-              // textAlign: TextAlign.center,
-              autofocus: false,
-              obscureText: obsuced,
-              controller: txtPassword,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(40)),
-                hintText: "Password",
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.remove_red_eye),
+                    hintText: "Username",
+                    // labelText: "Username",
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                TextField(
+                  // textAlign: TextAlign.center,
+                  autofocus: false,
+                  obscureText: obsuced,
+                  controller: txtPassword,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(40)),
+                    hintText: "Password",
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.remove_red_eye),
+                      onPressed: () {
+                        if (obsuced == true) {
+                          setState(() {
+                            obsuced = false;
+                          });
+                        } else {
+                          setState(() {
+                            obsuced = true;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
                   onPressed: () {
-                    if (obsuced == true) {
-                      setState(() {
-                        obsuced = false;
-                      });
+                    if (txtUsername.text.isEmpty) {
+                      return Config.alert(0, 'Username tidak boleh kosong');
+                    } else if (txtPassword.text.isEmpty) {
+                      return Config.alert(0, 'Password tidak boleh kosong');
                     } else {
-                      setState(() {
-                        obsuced = true;
-                      });
+                      submitLogin();
                     }
                   },
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: Size(155, 45),
+                    primary: Config.darkPrimary,
+                    onPrimary: Config.textWhite,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0),
+                    ),
+                  ),
+                  child: Text(
+                    "Masuk",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                if (txtUsername.text.isEmpty) {
-                  return Config.alert(0, 'Username tidak boleh kosong');
-                } else if (txtPassword.text.isEmpty) {
-                  return Config.alert(0, 'Password tidak boleh kosong');
-                } else {
-                  submitLogin();
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                fixedSize: Size(155, 45),
-                primary: Config.darkPrimary,
-                onPrimary: Config.textWhite,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32.0),
+                Builder(
+                  builder: (context) => Center(
+                    child: FlatButton(
+                      child: Text("Belum Punya Akun?"),
+                      onPressed: () {
+                        Navigator.pushNamed(context, Routes.REGISTER);
+                      },
+                    ),
+                  ),
                 ),
-              ),
-              child: Text(
-                "Masuk",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
+              ],
             ),
-            Builder(
-              builder: (context) => Center(
-                child: FlatButton(
-                  child: Text("Belum Punya Akun?"),
-                  onPressed: () {
-                    Navigator.pushNamed(context, Routes.REGISTER);
-                  },
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
