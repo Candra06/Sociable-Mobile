@@ -127,7 +127,7 @@ class _ForumPageState extends State<ForumPage> {
                                 snapshot.data[i].name.toString(),
                                 snapshot.data[i].topic,
                                 snapshot.data[i].likes,
-                                snapshot.data[i].likes,
+                                snapshot.data[i].replies,
                                 false);
 
                           })

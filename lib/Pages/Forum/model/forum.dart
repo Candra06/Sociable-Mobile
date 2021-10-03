@@ -9,6 +9,7 @@ class Forum {
     this.topic,
     this.content,
     this.likes,
+    this.replies,
     this.createdBy,
     this.name,
     this.anonim,
@@ -23,6 +24,7 @@ class Forum {
   String content;
   String name;
   int likes;
+  int replies;
   int createdBy;
   String anonim;
   DateTime createdAt;
@@ -44,6 +46,7 @@ class Forum {
         name: json["name"] == null ? null : json["name"],
         content: json["content"] == null ? null : json["content"],
         likes: json["likes"] == null ? null : json["likes"],
+        replies: json["replies"] == null ? null : json["replies"],
         createdBy: json["created_by"] == null ? null : json["created_by"],
         anonim: json["anonim"] == null ? null : json["anonim"],
         createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
