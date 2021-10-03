@@ -166,6 +166,38 @@ class _AkunPageState extends State<AkunPage> {
                     ),
                   ),
                 ),
+<<<<<<< HEAD
+              ),
+              Column(
+                children: [
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.all(13),
+                      constraints: BoxConstraints(minHeight: 200, maxHeight: MediaQuery.of(context).size.height * 0.53),
+                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(30))),
+                      child: FutureBuilder(
+                        future: forumItem,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return Config.loader('Memuat data');
+                          } else {
+                            return snapshot.hasData
+                                ? ListView.builder(
+                                    itemCount: snapshot.data.length,
+                                    itemBuilder: (BuildContext bc, int i) {
+                                      return ForumItem(snapshot.data[i].id, snapshot.data[i].anonim, snapshot.data[i].content, Config.formatDateInput(snapshot.data[i].createdAt.toString()),
+                                          snapshot.data[i].name.toString(), snapshot.data[i].topic, snapshot.data[i].likes, snapshot.data[i].likes, false);
+                                    })
+                                : Container(
+                                    child: Config.emptyData('Belum ada forum', context),
+                                  );
+                          }
+                        },
+                      ))
+                ],
+              )
+            ],
+=======
                 Column(
                   children: [
                     Container(
@@ -196,6 +228,7 @@ class _AkunPageState extends State<AkunPage> {
                 )
               ],
             ),
+>>>>>>> e166582270df276817d0b5e01e1e732f529e40c6
           ),
         ),
       ),
