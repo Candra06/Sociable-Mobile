@@ -17,12 +17,16 @@ class _ForumPageState extends State<ForumPage> {
   Future<List<Forum>> forumItem;
   ForumRepository repository = ForumRepository();
   bool load = true;
+  String isMember = '';
+  String searchString = "";
 
   void getData() async {
+    var tmpMember = await Pref.getMember();
     setState(() {
+      isMember = tmpMember;
       load = true;
     });
-    // print(load);
+    print(isMember);
     forumItem = repository.listForum();
     setState(() {
       load = false;
@@ -72,20 +76,12 @@ class _ForumPageState extends State<ForumPage> {
             Row(
               children: [
                 IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                      return SearchLayout();
-                    }));
-                  },
-                  icon: Icon(
-                    Icons.search,
-                    size: 30,
-                  ),
-                  color: Colors.black,
-                ),
-                IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, Routes.LIST_CHAT);
+                      if (isMember == 'true') {
+                        Navigator.pushNamed(context, Routes.LIST_CHAT);
+                      } else {
+                        Navigator.pushNamed(context, Routes.MEMBERSHIP);
+                      }
                     },
                     icon: Icon(
                       Icons.message,
@@ -106,12 +102,54 @@ class _ForumPageState extends State<ForumPage> {
                   return LinearProgressIndicator();
                 } else {
                   return snapshot.hasData
-                      ? ListView.builder(
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (BuildContext bc, int i) {
-                            return ForumItem(snapshot.data[i].id, snapshot.data[i].anonim, snapshot.data[i].content, Config.formatDateInput(snapshot.data[i].createdAt.toString()),
-                                snapshot.data[i].name.toString(), snapshot.data[i].topic, snapshot.data[i].likes, snapshot.data[i].replies, false);
-                          })
+                      ? SingleChildScrollView(
+                          physics: ScrollPhysics(),
+                          child: Container(
+                            color: Config.textWhite,
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                                  child: TextField(
+                                    // textAlign: TextAlign.center,
+                                    autofocus: true,
+                                    // controller: topikInput,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        searchString = value;
+                                      });
+                                    },
+                                    decoration: InputDecoration(
+                                      prefixIcon: Icon(Icons.search),
+                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(22), borderSide: BorderSide(color: Colors.grey, width: 0.5)),
+                                      hintText: "Cari Topik",
+                                    ),
+                                  ),
+                                ),
+                                ListView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: snapshot.data.length,
+                                    shrinkWrap: true,
+                                    itemBuilder: (BuildContext bc, int i) {
+                                      if (searchString != '') {
+                                        return snapshot.data[i].topic.toString().toLowerCase().contains(searchString.toLowerCase())
+                                            ? ForumItem(snapshot.data[i].id, snapshot.data[i].anonim, snapshot.data[i].content, Config.formatDateInput(snapshot.data[i].createdAt.toString()),
+                                                snapshot.data[i].name.toString(), snapshot.data[i].topic, snapshot.data[i].likes, snapshot.data[i].replies, false)
+                                            : Container();
+                                      } else {
+                                        return ForumItem(snapshot.data[i].id, snapshot.data[i].anonim, snapshot.data[i].content, Config.formatDateInput(snapshot.data[i].createdAt.toString()),
+                                            snapshot.data[i].name.toString(), snapshot.data[i].topic, snapshot.data[i].likes, snapshot.data[i].replies, false);
+                                      }
+                                      // return snapshot.data[i].topic.toString().contains(searchString)
+                                      //     ? ForumItem(snapshot.data[i].id, snapshot.data[i].anonim, snapshot.data[i].content, Config.formatDateInput(snapshot.data[i].createdAt.toString()),
+                                      //         snapshot.data[i].name.toString(), snapshot.data[i].topic, snapshot.data[i].likes, snapshot.data[i].replies, false)
+                                      //     : ForumItem(snapshot.data[i].id, snapshot.data[i].anonim, snapshot.data[i].content, Config.formatDateInput(snapshot.data[i].createdAt.toString()),
+                                      //         snapshot.data[i].name.toString(), snapshot.data[i].topic, snapshot.data[i].likes, snapshot.data[i].replies, false);
+                                    })
+                              ],
+                            ),
+                          ),
+                        )
                       : Container(
                           child: Config.emptyData('Belum ada forum', context),
                         );

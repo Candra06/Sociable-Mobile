@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sociable/Pages/Auth/Registrasi/diagnosa.dart';
 import 'package:sociable/Pages/Auth/authModel.dart';
 import 'package:sociable/Pages/Auth/auth_repository.dart';
+import 'package:sociable/Pages/Konsultasi/view/listRoom.dart';
+import 'package:sociable/Pages/Konsultasi/view/roomChat.dart';
 import 'package:sociable/helper/config.dart';
 import 'package:sociable/helper/route.dart';
 
@@ -28,42 +31,47 @@ class _LoginPageState extends State<LoginPage> {
     auth.username = txtUsername.text;
     auth.password = txtPassword.text;
 
-    dynamic respon = await repository.loginProses(auth).then((value) => {auth = value});
-    print(respon);
-    print(auth.id);
-    bool res;
-    if (respon != null) {
+    var request = await repository.loginProses(auth).then((value) => {auth = value});
+    print(auth.status);
+    print(request);
+    if (auth.status == true) {
       SharedPreferences pref = await SharedPreferences.getInstance();
-      pref.setString('username', auth.username);
-      pref.setString('email', auth.email);
-      pref.setString('phone', auth.phone);
-      pref.setString('role', auth.role.toString());
-      pref.setString('token', auth.token);
-      pref.setString('id', auth.id.toString());
-      pref.setString('gender', auth.gender);
-      pref.setString('membership', auth.membership.toString());
-      pref.setString('birthDate', auth.birthDate.toString());
+      pref.setString('username', auth.data.username);
+      pref.setString('email', auth.data.email);
+      pref.setString('phone', auth.data.phone);
+      pref.setString('role', auth.data.role);
+      pref.setString('token', auth.data.token);
+      pref.setString('id', auth.data.id.toString());
+      pref.setString('gender', auth.data.gender);
+      pref.setString('membership', auth.data.membership.toString());
+      pref.setString('birthDate', auth.data.birthDate.toString());
       Config.alert(1, 'Login berhasil');
       Navigator.pop(context);
-      if (auth.levelDiagnosa == null) {
-        res = await repository.createChallenge();
-        pref.setString('level_diagnosa', '-');
-        pref.setString('isDiagnosa', 'true');
-        setState(() {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
-            return DiagnosaPage();
-          }));
-        });
+      if (auth.data.role == 'Psikolog') {
+        Navigator.pushReplacement(context, PageTransition(child: ListRoomChar(), type: PageTransitionType.topToBottom));
       } else {
-        pref.setString('level_diagnosa', auth.levelDiagnosa);
-        pref.setString('isDiagnosa', 'false');
-        setState(() {
-          Navigator.pushNamed(context, Routes.HOME);
-        });
+        if (auth.data.levelDiagnosa == null) {
+          repository.createChallenge();
+          pref.setString('level_diagnosa', '-');
+          pref.setString('isDiagnosa', 'true');
+          setState(() {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+              return DiagnosaPage();
+            }));
+          });
+        } else {
+          pref.setString('level_diagnosa', auth.data.levelDiagnosa);
+          pref.setString('isDiagnosa', 'false');
+          setState(() {
+            Navigator.pushNamed(context, Routes.HOME);
+          });
+        }
       }
     } else {
-      print('object');
-      Navigator.pop(context);
+      setState(() {
+        Navigator.pop(context);
+        Config.alert(0, 'Login gagal, silahkan periksa akun anda');
+      });
     }
     Config.emptyData('Forum masih kosong', context);
   }

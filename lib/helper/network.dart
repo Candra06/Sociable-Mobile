@@ -18,6 +18,7 @@ class EndPoint {
 
   // Membership
   static final String getMember = api + 'membership/get';
+  static final String post = api + 'membership/store';
 
   //Diagnosa
   static final String showQuestion = api + 'diagnosa/show';

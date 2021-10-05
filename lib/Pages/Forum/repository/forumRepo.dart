@@ -67,7 +67,7 @@ class ForumRepository {
 
   Future<List<Forum>> historyForum() async {
     var token = await Pref.getToken();
-    http.Response res = await http.get(Uri.parse(EndPoint.listForum), headers: {'Authorization': 'Bearer ' + token});
+    http.Response res = await http.get(Uri.parse(EndPoint.historyForum), headers: {'Authorization': 'Bearer ' + token});
     var data = json.decode(res.body);
     print(data);
     if (res.statusCode == 200) {

@@ -10,7 +10,7 @@ class DetailRoom {
   });
 
   int id;
-  int idRoom;
+  String idRoom;
   int sender;
   int receiver;
   String message;
@@ -19,7 +19,7 @@ class DetailRoom {
 
   factory DetailRoom.fromJson(Map<String, dynamic> json) => DetailRoom(
         id: json["id"] == null ? null : json["id"],
-        idRoom: json["id_room"] == null ? null : json["id_room"],
+        idRoom: json["id_room"] == null ? null : json["id_room"].toString(),
         sender: json["sender"] == null ? null : json["sender"],
         receiver: json["receiver"] == null ? null : json["receiver"],
         message: json["message"] == null ? null : json["message"],
@@ -31,5 +31,6 @@ class DetailRoom {
         "sender": sender == null ? null : sender.toString(),
         "receiver": receiver == null ? null : receiver.toString(),
         "message": message == null ? null : message,
+        "id_room": idRoom == null ? null : idRoom,
       };
 }

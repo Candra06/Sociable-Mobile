@@ -8,14 +8,14 @@ import 'package:sociable/helper/pref.dart';
 
 class AuthRepository {
   Future<dynamic> loginProses(Auth auth) async {
-    
+    // print(auth..loginBody());
     http.Response res = await http.post(Uri.parse(EndPoint.login), body: auth.loginBody());
     var data = json.decode(res.body);
     print(data);
     if (res.statusCode == 200) {
-      return Auth.fromJson(data['data']);
+      return Auth.fromJson(data);
     } else {
-      return Config.alert(0, 'Login gagal, silahkan periksa akun anda');
+      return Auth.fromJson(data);
     }
   }
 

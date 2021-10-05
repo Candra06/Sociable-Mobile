@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sociable/Pages/Konsultasi/model/room.dart';
 import 'package:sociable/Pages/Konsultasi/repository/konsultasi_repository.dart';
 import 'package:sociable/Pages/Konsultasi/view/listPsikolog.dart';
 import 'package:sociable/helper/config.dart';
+import 'package:sociable/helper/pref.dart';
 import 'package:sociable/helper/route.dart';
 
 class ListRoomChar extends StatefulWidget {
@@ -16,9 +18,15 @@ class ListRoomChar extends StatefulWidget {
 class _ListRoomCharState extends State<ListRoomChar> {
   Future<List<Room>> room;
   KonsultasiRepository repository = new KonsultasiRepository();
+  String role = '';
 
   void getData() async {
+    var tmpRole = await Pref.getRole();
     room = repository.listRoom();
+    setState(() {
+      role = tmpRole;
+      print(role);
+    });
   }
 
   Widget itemChat(String idRoom, username, idReceiver, date, message) {
@@ -80,22 +88,67 @@ class _ListRoomCharState extends State<ListRoomChar> {
     super.initState();
   }
 
+  void logout() async {
+    showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text('Apakah anda yakin?'),
+        content: new Text('Ingin keluar dari akun ini.'),
+        actions: <Widget>[
+          new FlatButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: new Text('Tidak'),
+          ),
+          new FlatButton(
+            onPressed: () async {
+              SharedPreferences pref = await SharedPreferences.getInstance();
+              await pref.clear();
+              Navigator.pushNamed(context, Routes.LOGIN);
+            },
+            child: new Text('Iya'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.white,
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, Routes.HOME);
-              },
-              icon: Icon(Icons.arrow_back, color: Config.textBlack)),
-          title: Text(
-            "CHAT",
-            style: TextStyle(color: Colors.black, fontSize: 25),
-          ),
-        ),
+        appBar: role == 'Psikolog'
+            ? AppBar(
+                elevation: 0,
+                backgroundColor: Colors.white,
+                automaticallyImplyLeading: false,
+                title: Text(
+                  "CHAT",
+                  style: TextStyle(color: Colors.black, fontSize: 25),
+                ),
+                actions: [
+                  IconButton(
+                      onPressed: () {
+                        logout();
+                      },
+                      icon: Icon(
+                        Icons.logout,
+                        color: Colors.black,
+                        size: 30,
+                      ))
+                ],
+              )
+            : AppBar(
+                elevation: 0,
+                backgroundColor: Colors.white,
+                leading: IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, Routes.HOME);
+                    },
+                    icon: Icon(Icons.arrow_back, color: Config.textBlack)),
+                title: Text(
+                  "CHAT",
+                  style: TextStyle(color: Colors.black, fontSize: 25),
+                ),
+              ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             // Navigator.of(context).push(MaterialPageRoute(builder: (context) {

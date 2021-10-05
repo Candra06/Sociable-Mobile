@@ -61,7 +61,7 @@ class MemberShipPage extends StatelessWidget {
                     color: Color.fromRGBO(255, 255, 255, 0.35),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                     child: Container(
-                      width: double.infinity,
+                      width: MediaQuery.of(context).size.width,
                       padding: EdgeInsets.all(20),
                       // height: 198,
                       child: Column(

@@ -62,6 +62,7 @@ class _DiagnosaPageState extends State<DiagnosaPage> {
     sp.setString('level_diagnosa', data['data']);
     sp.setString('isDiagnosa', 'false');
     if (data['data'] == 'Bukan SAD') {
+      print(data['data']);
       Navigator.pop(context);
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
         return HasilDiagnosa(
@@ -72,7 +73,7 @@ class _DiagnosaPageState extends State<DiagnosaPage> {
       Navigator.pop(context);
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
         return HasilDiagnosaDua(
-          nama: tmpNama,  
+          nama: tmpNama,
           level: data['data'],
         );
       }));
@@ -138,9 +139,11 @@ class _DiagnosaPageState extends State<DiagnosaPage> {
           height: double.infinity,
           decoration: BoxDecoration(
             // color: Colors.blue[200],
-            image: DecorationImage(image: AssetImage(
+            image: DecorationImage(
+                image: AssetImage(
                   "assets/images/bg.png",
-                ),fit: BoxFit.cover),
+                ),
+                fit: BoxFit.cover),
           ),
           child: FutureBuilder<List<Question>>(
               future: question,
