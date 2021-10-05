@@ -11,8 +11,7 @@ import 'package:sociable/helper/pref.dart';
 class ForumRepository {
   Future<List<Forum>> listForum() async {
     var token = await Pref.getToken();
-    http.Response res = await http.get(Uri.parse(EndPoint.listForum),
-        headers: {'Authorization': 'Bearer ' + token});
+    http.Response res = await http.get(Uri.parse(EndPoint.listForum), headers: {'Authorization': 'Bearer ' + token});
     var data = json.decode(res.body);
     // print(data);
     if (res.statusCode == 200) {
@@ -26,8 +25,7 @@ class ForumRepository {
   Future<DetailForum> detailForum(String id) async {
     var token = await Pref.getToken();
     print(id);
-    http.Response res = await http.get(Uri.parse(EndPoint.detailForum(id)),
-        headers: {'Authorization': 'Bearer ' + token});
+    http.Response res = await http.get(Uri.parse(EndPoint.detailForum(id)), headers: {'Authorization': 'Bearer ' + token});
     var data = json.decode(res.body);
     // print(data);
     if (res.statusCode == 200) {
@@ -41,8 +39,7 @@ class ForumRepository {
   Future<bool> postForum(Forum forum) async {
     var token = await Pref.getToken();
     print(forum.toJson());
-    http.Response res = await http.post(Uri.parse(EndPoint.addForum),
-        headers: {'Authorization': 'Bearer ' + token}, body: forum.toJson());
+    http.Response res = await http.post(Uri.parse(EndPoint.addForum), headers: {'Authorization': 'Bearer ' + token}, body: forum.toJson());
     // print(res.body);
     if (res.statusCode == 200) {
       return true;
@@ -63,17 +60,14 @@ class ForumRepository {
       List<dynamic> list = data['reply'];
       print(list.length);
       return list.map((e) => CommentModel.fromJson(e)).toList();
-
     } else {
       return [];
     }
   }
 
-
   Future<List<Forum>> historyForum() async {
     var token = await Pref.getToken();
-    http.Response res = await http.get(Uri.parse(EndPoint.listForum),
-        headers: {'Authorization': 'Bearer ' + token});
+    http.Response res = await http.get(Uri.parse(EndPoint.listForum), headers: {'Authorization': 'Bearer ' + token});
     var data = json.decode(res.body);
     print(data);
     if (res.statusCode == 200) {

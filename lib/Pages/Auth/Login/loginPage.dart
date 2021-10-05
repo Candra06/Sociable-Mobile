@@ -28,8 +28,9 @@ class _LoginPageState extends State<LoginPage> {
     auth.username = txtUsername.text;
     auth.password = txtPassword.text;
 
-    dynamic respon =
-        await repository.loginProses(auth).then((value) => {auth = value});
+    dynamic respon = await repository.loginProses(auth).then((value) => {auth = value});
+    print(respon);
+    print(auth.id);
     bool res;
     if (respon != null) {
       SharedPreferences pref = await SharedPreferences.getInstance();
@@ -38,6 +39,7 @@ class _LoginPageState extends State<LoginPage> {
       pref.setString('phone', auth.phone);
       pref.setString('role', auth.role.toString());
       pref.setString('token', auth.token);
+      pref.setString('id', auth.id.toString());
       pref.setString('gender', auth.gender);
       pref.setString('membership', auth.membership.toString());
       pref.setString('birthDate', auth.birthDate.toString());
@@ -48,8 +50,7 @@ class _LoginPageState extends State<LoginPage> {
         pref.setString('level_diagnosa', '-');
         pref.setString('isDiagnosa', 'true');
         setState(() {
-          Navigator.of(context)
-              .pushReplacement(MaterialPageRoute(builder: (context) {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
             return DiagnosaPage();
           }));
         });
@@ -90,8 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                   autofocus: false,
                   controller: txtUsername,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(40)),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(40)),
 
                     hintText: "Username",
                     // labelText: "Username",
@@ -106,8 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                   obscureText: obsuced,
                   controller: txtPassword,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(40)),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(40)),
                     hintText: "Password",
                     suffixIcon: IconButton(
                       icon: Icon(Icons.remove_red_eye),

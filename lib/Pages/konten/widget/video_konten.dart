@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sociable/Pages/konten/detail_konten.dart';
+import 'package:sociable/helper/config.dart';
+import 'package:sociable/helper/pref.dart';
+import 'package:sociable/helper/route.dart';
 // import 'package:sociable/Pages/Membership/membership.dart';
 // import 'package:sociable/Pages/konten/detail_kontent.dart';
 
@@ -25,19 +28,51 @@ class VideoContentItem extends StatefulWidget {
 }
 
 class _VideoContentItemState extends State<VideoContentItem> {
+  String isPremium = '';
+  void getInfo() async {
+    var tmpMember = await Pref.getMember();
+    setState(() {
+      print(tmpMember);
+      isPremium = tmpMember;
+    });
+  }
+
+  @override
+  void initState() {
+    getInfo();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) {
-            return DetailKonten(
-              idYoutube: widget.idVideo,
-              title: widget.judulVideo,
-              description: widget.description,
+        if (widget.typeVideo == true) {
+          if (isPremium == 'false') {
+            Config.alert(0, 'Anda belum upgrade Premium');
+            Navigator.pushNamed(context, Routes.MEMBERSHIP);
+          } else {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) {
+                return DetailKonten(
+                  idYoutube: widget.idVideo,
+                  title: widget.judulVideo,
+                  description: widget.description,
+                );
+              }),
             );
-          }),
-        );
+          }
+        } else {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) {
+              return DetailKonten(
+                idYoutube: widget.idVideo,
+                title: widget.judulVideo,
+                description: widget.description,
+              );
+            }),
+          );
+        }
       },
       child: Container(
         margin: EdgeInsets.symmetric(
@@ -98,9 +133,7 @@ class _VideoContentItemState extends State<VideoContentItem> {
                     ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(28),
-                      color: widget.typeVideo
-                          ? Color(0xffFFC803)
-                          : Color(0xffF0F0F1),
+                      color: widget.typeVideo ? Color(0xffFFC803) : Color(0xffF0F0F1),
                     ),
                     child: Text(
                       widget.typeVideo ? "Premium" : 'Basic',

@@ -8,7 +8,7 @@ import 'package:sociable/helper/pref.dart';
 
 class AuthRepository {
   Future<dynamic> loginProses(Auth auth) async {
-    print(auth.loginBody());
+    
     http.Response res = await http.post(Uri.parse(EndPoint.login), body: auth.loginBody());
     var data = json.decode(res.body);
     print(data);

@@ -20,6 +20,7 @@ class _HasilDiagnosaState extends State<HasilDiagnosa> {
     ChallengeRepository repository = new ChallengeRepository();
 
     bool respon = await repository.insertChallenge();
+    print(respon);
     if (respon) {
       Navigator.pop(context);
       Navigator.pushNamed(context, Routes.HOME);
@@ -113,7 +114,7 @@ class _HasilDiagnosaState extends State<HasilDiagnosa> {
                       children: [
                         Container(
                           width: 110,
-                          height: 200,
+                          height: 170,
                           decoration: BoxDecoration(
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(20),
@@ -122,7 +123,7 @@ class _HasilDiagnosaState extends State<HasilDiagnosa> {
                         ),
                         Container(
                           width: 110,
-                          height: 200,
+                          height: 170,
                           decoration: BoxDecoration(
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(20),
@@ -131,7 +132,7 @@ class _HasilDiagnosaState extends State<HasilDiagnosa> {
                         ),
                         Container(
                           width: 110,
-                          height: 200,
+                          height: 170,
                           decoration: BoxDecoration(
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(20),
