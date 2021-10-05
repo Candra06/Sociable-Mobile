@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sociable/Pages/Konsultasi/model/room.dart';
+import 'package:sociable/Pages/Konsultasi/repository/konsultasi_repository.dart';
 import 'package:sociable/Pages/Konsultasi/view/listPsikolog.dart';
 import 'package:sociable/helper/config.dart';
 import 'package:sociable/helper/route.dart';
@@ -12,10 +14,18 @@ class ListRoomChar extends StatefulWidget {
 }
 
 class _ListRoomCharState extends State<ListRoomChar> {
-  Widget itemChat() {
+  Future<List<Room>> room;
+  KonsultasiRepository repository = new KonsultasiRepository();
+
+  void getData() async {
+    room = repository.listRoom();
+  }
+
+  Widget itemChat(String idRoom, username, idReceiver, date, message) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, Routes.ROOM_CHAT);
+        var data = {'id_room': idRoom, 'id_receiver': idReceiver, 'nama_receiver': username};
+        Navigator.pushNamed(context, Routes.ROOM_CHAT, arguments: data);
       },
       child: Card(
         child: Container(
@@ -34,11 +44,11 @@ class _ListRoomCharState extends State<ListRoomChar> {
                           children: [
                             Text(
                               // kelas[i]['nama'],
-                              'Norhendra Ardhanaputra, S.Psi',
+                              username,
                               style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w500),
                             ),
                             Text(
-                              '2 September 2021',
+                              Config.formatDateInput(date),
                               // kelas[i]['mapel'],
                               style: GoogleFonts.lato(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.grey),
                             ),
@@ -51,7 +61,7 @@ class _ListRoomCharState extends State<ListRoomChar> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Silahkan ceritakan apa keluhan anda  ',
+                              message,
                               style: TextStyle(fontFamily: 'AirbnbMedium', fontSize: 12, color: Config.textGrey),
                             )
                           ],
@@ -65,51 +75,71 @@ class _ListRoomCharState extends State<ListRoomChar> {
   }
 
   @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, Routes.HOME);
-            },
-            icon: Icon(Icons.arrow_back, color: Config.textBlack)),
-        title: Text(
-          "CHAT",
-          style: TextStyle(color: Colors.black, fontSize: 25),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          //   return AddNewForum();
-          // }));
-          Navigator.of(context).push(new MaterialPageRoute(
-              builder: (BuildContext context) {
-                return ListPsikolog();
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.white,
+          leading: IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.HOME);
               },
-              fullscreenDialog: true));
-        },
-        child: IconButton(
+              icon: Icon(Icons.arrow_back, color: Config.textBlack)),
+          title: Text(
+            "CHAT",
+            style: TextStyle(color: Colors.black, fontSize: 25),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
           onPressed: () {
+            // Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            //   return AddNewForum();
+            // }));
             Navigator.of(context).push(new MaterialPageRoute(
                 builder: (BuildContext context) {
                   return ListPsikolog();
                 },
                 fullscreenDialog: true));
           },
-          icon: Icon(Icons.chat),
+          child: IconButton(
+            onPressed: () {
+              Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return ListPsikolog();
+                  },
+                  fullscreenDialog: true));
+            },
+            icon: Icon(Icons.chat),
+          ),
         ),
-      ),
-      body: Container(
-        padding: EdgeInsets.all(8),
-        child: ListView.builder(
-            itemCount: 1,
-            itemBuilder: (BuildContext bc, int i) {
-              return itemChat();
-            }),
-      ),
-    );
+        body: FutureBuilder<List<Room>>(
+            future: room,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return LinearProgressIndicator();
+              } else {
+                if (snapshot.data.length > 0) {
+                  return snapshot.hasData
+                      ? Container(
+                          padding: EdgeInsets.all(8),
+                          child: ListView.builder(
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (BuildContext bc, int i) {
+                                return itemChat(snapshot.data[i].idRoom.toString(), snapshot.data[i].username, snapshot.data[i].receiver.toString(), snapshot.data[i].createdAt.toString(),
+                                    snapshot.data[i].message);
+                              }),
+                        )
+                      : Container(child: Config.emptyData('Belum ada konsultasi', context));
+                } else {
+                  return Container(child: Config.emptyData('Belum ada konsultasi', context));
+                }
+              }
+            }));
   }
 }

@@ -30,4 +30,10 @@ class EndPoint {
   static String finishChallenge(String id) => api + 'challenge/finish/$id';
 
   static String comment(var id) => api + 'forum/reply/$id';
+
+  //Konsultasi
+  static final String listPsikolog = api + 'konsultasi/listPsikolog';
+  static final String lsitRoom = api + 'konsultasi/room';
+  static final String createChat = api + 'konsultasi/store';
+  static String detailChat(String id) => api + 'konsultasi/detail/$id';
 }

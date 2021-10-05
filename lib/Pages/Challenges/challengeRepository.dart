@@ -9,7 +9,7 @@ class ChallengeRepository {
   Future<bool> insertChallenge() async {
     var token = await Pref.getToken();
     http.Response res = await http.get(Uri.parse(EndPoint.createChallenge), headers: {'Authorization': 'Bearer $token'});
-
+    print(res.body);
     if (res.statusCode == 200) {
       return true;
     } else {

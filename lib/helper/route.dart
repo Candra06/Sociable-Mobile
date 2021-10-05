@@ -10,6 +10,7 @@ import 'package:sociable/Pages/Challenges/widget/challenges_item.dart';
 import 'package:sociable/Pages/Forum/add_new_forum/add_new_forum.dart';
 import 'package:sociable/Pages/Konsultasi/view/listRoom.dart';
 import 'package:sociable/Pages/Konsultasi/view/roomChat.dart';
+import 'package:sociable/Pages/Membership/membership.dart';
 import 'package:sociable/Pages/splash.dart';
 
 class Routes {
@@ -22,33 +23,35 @@ class Routes {
   static const String LIST_CHAT = '/list_room';
   static const String ROOM_CHAT = '/room_chat';
   static const String DETAIL_CHALLENGE = '/detail_challenge';
+  static const String MEMBERSHIP = '/membership';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case SPLASH:
         return MaterialPageRoute(builder: (_) => SplashScreen());
       case LOGIN:
-        return PageTransition(
-            child: LoginPage(), type: PageTransitionType.leftToRight);
+        return PageTransition(child: LoginPage(), type: PageTransitionType.leftToRight);
       case REGISTER:
-        return PageTransition(
-            child: RegistrationPage(), type: PageTransitionType.leftToRight);
+        return PageTransition(child: RegistrationPage(), type: PageTransitionType.leftToRight);
       case HOME:
-        return PageTransition(
-            child: MainPage(), type: PageTransitionType.leftToRight);
+        return PageTransition(child: MainPage(), type: PageTransitionType.leftToRight);
       case ADD_FORUM:
-        return PageTransition(
-            child: AddNewForum(), type: PageTransitionType.bottomToTop);
+        return PageTransition(child: AddNewForum(), type: PageTransitionType.bottomToTop);
       case LIST_CHAT:
-        return PageTransition(
-            child: ListRoomChar(), type: PageTransitionType.bottomToTop);
+        return PageTransition(child: ListRoomChar(), type: PageTransitionType.bottomToTop);
+      case MEMBERSHIP:
+        return PageTransition(child: MemberShipPage(), type: PageTransitionType.bottomToTop);
       case ROOM_CHAT:
+        Map<String, dynamic> data = settings.arguments;
         return PageTransition(
-            child: RoomChat(), type: PageTransitionType.bottomToTop);
-      case DETAIL_CHALLENGE:
-        return PageTransition(
-            child: DetailChallenges(idChallenges: settings.arguments),
+            child: RoomChat(
+              idRoom: data['id_room'],
+              idReceiver: data['id_receiver'],
+              nameReeiver: data['nama_receiver'],
+            ),
             type: PageTransitionType.bottomToTop);
+      case DETAIL_CHALLENGE:
+        return PageTransition(child: DetailChallenges(idChallenges: settings.arguments), type: PageTransitionType.bottomToTop);
 
       // case AKUN:
       //   var data = settings.arguments;
