@@ -1,51 +1,54 @@
+import 'dart:io';
+
 class Membership {
-    Membership({
-        this.status,
-        this.message,
-        this.data,
-    });
+  Membership({
+    this.status,
+    this.message,
+    this.data,
+    this.bukti
+  });
 
-    bool status;
-    String message;
-    Data data;
+  bool status;
+  String message;
+  File bukti;
+  Data data;
 
-    factory Membership.fromJson(Map<String, dynamic> json) => Membership(
+  factory Membership.fromJson(Map<String, dynamic> json) => Membership(
         status: json["status"] == null ? null : json["status"],
         message: json["message"] == null ? null : json["message"],
         data: json["data"] == null ? null : Data.fromJson(json["data"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
-        "status": status == null ? null : status,
-        "message": message == null ? null : message,
-        "data": data == null ? null : data.toJson(),
-    };
+  Map<String, dynamic> toJson() => {
+        "amount": 300000,
+        "bukti": bukti == null ? null : bukti,
+      };
 }
 
 class Data {
-    Data({
-        this.id,
-        this.idUser,
-        this.amount,
-        this.paymentStatus,
-        this.proofPayment,
-        this.startDate,
-        this.expDate,
-        this.createdAt,
-        this.updatedAt,
-    });
+  Data({
+    this.id,
+    this.idUser,
+    this.amount,
+    this.paymentStatus,
+    this.proofPayment,
+    this.startDate,
+    this.expDate,
+    this.createdAt,
+    this.updatedAt,
+  });
 
-    int id;
-    int idUser;
-    int amount;
-    String paymentStatus;
-    String proofPayment;
-    DateTime startDate;
-    DateTime expDate;
-    DateTime createdAt;
-    DateTime updatedAt;
+  int id;
+  int idUser;
+  int amount;
+  String paymentStatus;
+  String proofPayment;
+  DateTime startDate;
+  DateTime expDate;
+  DateTime createdAt;
+  DateTime updatedAt;
 
-    factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"] == null ? null : json["id"],
         idUser: json["id_user"] == null ? null : json["id_user"],
         amount: json["amount"] == null ? null : json["amount"],
@@ -55,9 +58,9 @@ class Data {
         expDate: json["exp_date"] == null ? null : DateTime.parse(json["exp_date"]),
         createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id == null ? null : id,
         "id_user": idUser == null ? null : idUser,
         "amount": amount == null ? null : amount,
@@ -67,5 +70,5 @@ class Data {
         "exp_date": expDate == null ? null : expDate.toIso8601String(),
         "created_at": createdAt == null ? null : createdAt.toIso8601String(),
         "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
-    };
+      };
 }

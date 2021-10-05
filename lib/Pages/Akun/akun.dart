@@ -180,16 +180,24 @@ class _AkunPageState extends State<AkunPage> {
                           if (snapshot.connectionState == ConnectionState.waiting) {
                             return Config.loader('Memuat data');
                           } else {
-                            return snapshot.hasData
-                                ? ListView.builder(
+                            if (snapshot.hasData) {
+                              if (snapshot.data.length > 0) {
+                                return ListView.builder(
                                     itemCount: snapshot.data.length,
                                     itemBuilder: (BuildContext bc, int i) {
                                       return ForumItem(snapshot.data[i].id, snapshot.data[i].anonim, snapshot.data[i].content, Config.formatDateInput(snapshot.data[i].createdAt.toString()),
                                           snapshot.data[i].name.toString(), snapshot.data[i].topic, snapshot.data[i].likes, snapshot.data[i].replies, false);
-                                    })
-                                : Container(
-                                    child: Config.emptyData('Belum ada forum', context),
-                                  );
+                                    });
+                              } else {
+                                return Container(
+                                  child: Config.emptyData('Belum ada forum', context),
+                                );
+                              }
+                            } else {
+                              return Container(
+                                child: Config.emptyData('Belum ada forum', context),
+                              );
+                            }
                           }
                         },
                       ))

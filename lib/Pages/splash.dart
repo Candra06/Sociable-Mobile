@@ -54,6 +54,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     Future.delayed(Duration(seconds: 3), () async {
       Navigator.of(context).pushReplacement(PageTransition(child: LoginPage(), type: PageTransitionType.fade));
       String token = await Pref.getToken();
+
       String isDiagnosa = await Pref.isDiagnosa();
       if (token == '' || token == null) {
         Navigator.of(context).pushReplacement(PageTransition(child: LoginPage(), type: PageTransitionType.fade));
@@ -63,7 +64,12 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
             return DiagnosaPage();
           }));
         } else {
-          Navigator.pushNamed(context, Routes.HOME);
+          String role = await Pref.getRole();
+          if (role == 'Psikolog') {
+            Navigator.pushNamed(context, Routes.LIST_CHAT);
+          } else {
+            Navigator.pushNamed(context, Routes.HOME);
+          }
         }
       }
     });

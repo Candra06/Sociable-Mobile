@@ -20,7 +20,7 @@ class _HasilDiagnosaState extends State<HasilDiagnosa> {
     ChallengeRepository repository = new ChallengeRepository();
 
     bool respon = await repository.insertChallenge();
-    print(respon);
+    print('ini responnya ' + respon.toString());
     if (respon) {
       Navigator.pop(context);
       Navigator.pushNamed(context, Routes.HOME);
@@ -68,7 +68,7 @@ class _HasilDiagnosaState extends State<HasilDiagnosa> {
                 ),
                 Text(
                   ""
-                  "Berdasarkan hasil diagnosa kami, kamu bukan termasuk orang yang mengidap Social Anxiety Disorder (SAD) loh.",
+                  "Berdasarkan hasil diagnosa kami, kamu BUKAN termasuk orang yang mengidap Social Anxiety Disorder (SAD) loh.",
                   style: TextStyle(
                     fontSize: 15,
                     color: Colors.black,
@@ -77,93 +77,93 @@ class _HasilDiagnosaState extends State<HasilDiagnosa> {
               ],
             ),
           ),
-          Flexible(
-              fit: FlexFit.tight,
+          Container(
+              // fit: FlexFit.tight,
               child: Container(
-                margin: EdgeInsets.only(top: 220),
-                padding: EdgeInsets.only(right: 5, left: 5, top: 20),
-                width: double.infinity,
-                height: 500,
-                decoration: BoxDecoration(
-                    color: Color.fromRGBO(46, 230, 255, 1),
-                    // color:Colors.blue;
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(50),
-                      topLeft: Radius.circular(50),
-                    )),
-                child: Column(
+            margin: EdgeInsets.only(top: 220),
+            padding: EdgeInsets.only(right: 5, left: 5, top: 20),
+            width: double.infinity,
+            height: 500,
+            decoration: BoxDecoration(
+                color: Color.fromRGBO(46, 230, 255, 1),
+                // color:Colors.blue;
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(50),
+                  topLeft: Radius.circular(50),
+                )),
+            child: Column(
+              children: [
+                Text(
+                  "Jangan Khawatir, Kamu Tetap Bisa Menggunakan Sociable",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 28,
+                ),
+                Text(
+                  "Melalui fitur-fitur yang tersedia, kami yakin dapat menjauhkanmu dari penyakit Social Anxiety Disorder",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 16),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(
-                      "Jangan Khawatir, Kamu Tetap Bisa Menggunakan Sociable",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    Container(
+                      width: 110,
+                      height: 170,
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(20),
+                        image: DecorationImage(image: AssetImage("assets/images/chalange.png"), fit: BoxFit.cover),
+                      ),
                     ),
-                    SizedBox(
-                      height: 28,
+                    Container(
+                      width: 110,
+                      height: 170,
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(20),
+                        image: DecorationImage(image: AssetImage("assets/images/forum.png"), fit: BoxFit.cover),
+                      ),
                     ),
-                    Text(
-                      "Melalui fitur-fitur yang tersedia, kami yakin dapat menjauhkanmu dari penyakit Social Anxiety Disorder",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          width: 110,
-                          height: 170,
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(20),
-                            image: DecorationImage(image: AssetImage("assets/images/chalange.png"), fit: BoxFit.cover),
-                          ),
-                        ),
-                        Container(
-                          width: 110,
-                          height: 170,
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(20),
-                            image: DecorationImage(image: AssetImage("assets/images/forum.png"), fit: BoxFit.cover),
-                          ),
-                        ),
-                        Container(
-                          width: 110,
-                          height: 170,
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(20),
-                            image: DecorationImage(image: AssetImage("assets/images/konten.png"), fit: BoxFit.cover),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Builder(
-                      builder: (context) => Container(
-                        width: 155,
-                        height: 45,
-                        margin: EdgeInsets.only(top: 40),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(53),
-                        ),
-                        child: FlatButton(
-                          child: Text(
-                            "Join Program",
-                            style: TextStyle(fontSize: 20, color: Colors.black),
-                          ),
-                          onPressed: () {
-                            submit();
-                          },
-                        ),
+                    Container(
+                      width: 110,
+                      height: 170,
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(20),
+                        image: DecorationImage(image: AssetImage("assets/images/konten.png"), fit: BoxFit.cover),
                       ),
                     ),
                   ],
                 ),
-              ))
+                Builder(
+                  builder: (context) => Container(
+                    width: 155,
+                    height: 45,
+                    margin: EdgeInsets.only(top: 40),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(53),
+                    ),
+                    child: FlatButton(
+                      child: Text(
+                        "Join Program",
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                      ),
+                      onPressed: () {
+                        submit();
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ))
         ],
       ),
     );

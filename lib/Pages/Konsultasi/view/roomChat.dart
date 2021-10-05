@@ -73,10 +73,12 @@ class _RoomChatState extends State<RoomChat> {
   void send() async {
     String sender = await Pref.getID();
     print(sender);
+    print(widget.idReceiver);
     DetailRoom body = new DetailRoom();
     body.sender = int.parse(sender);
     body.receiver = int.parse(widget.idReceiver);
     body.message = txtMessage.text;
+    body.idRoom = room;
     dynamic data = await repository.send(body);
     if (data['status'] == true) {
       setState(() {
